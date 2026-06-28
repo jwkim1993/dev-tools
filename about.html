@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About JSON Prettier — Free Online JSON Formatter &amp; Validator</title>
+  <meta name="description" content="Learn about JSON Prettier, a free online JSON formatter, validator, and beautifier. All processing happens client-side in your browser — your data never leaves your device.">
+  <link rel="canonical" href="https://json-prettier.pages.dev/about.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About JSON Prettier — Free Online JSON Formatter &amp; Validator">
+  <meta property="og:description" content="Learn about JSON Prettier, a free, client-side JSON formatting and validation tool.">
+  <meta property="og:url" content="https://json-prettier.pages.dev/about.html">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Segoe UI,sans-serif' font-weight='700' font-size='14' fill='white'%3E%7B%7D%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="JSON Prettier Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 00-2 2v5a2 2 0 01-2 2 2 2 0 012 2v5a2 2 0 002 2h1"/><path d="M16 3h1a2 2 0 012 2v5a2 2 0 002 2 2 2 0 00-2 2v5a2 2 0 01-2 2h-1"/></svg>
+      JSON Prettier
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Formatter</a></li>
+        <li><a href="about.html" class="nav__link nav__link--active">About</a></li>
+        <li><a href="privacy.html" class="nav__link">Privacy</a></li>
+      </ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="page-header__breadcrumb">
+        <a href="/">Home</a> <span aria-hidden="true">›</span> About
+      </div>
+      <h1 class="page-header__title">About JSON Prettier</h1>
+      <p class="page-header__desc">A free, fast, and private JSON formatting and validation tool built for developers.</p>
+    </div>
+
+    <article class="content">
+      <h2>Our Mission</h2>
+      <p>JSON Prettier was created with a simple goal: to provide developers with a fast, reliable, and privacy-respecting tool for working with JSON data. Whether you are debugging an API response, cleaning up a configuration file, or learning JSON syntax, this tool is designed to make the process as smooth as possible.</p>
+      <p>We believe that developer tools should be free, fast, and transparent. That is why JSON Prettier runs entirely in your browser — no data is ever transmitted to a server, no account is required, and the tool works even after the page has loaded, regardless of your internet connection.</p>
+
+      <h2>What Makes JSON Prettier Different</h2>
+      <ul>
+        <li><strong>Complete privacy</strong> — All JSON processing happens client-side in your browser. Your data never touches a server. There is no backend, no database, and no tracking of your input.</li>
+        <li><strong>Real-time validation</strong> — Errors are detected as you type, with precise line and column indicators highlighted directly in the editor. No need to click a button to find out if your JSON is valid.</li>
+        <li><strong>Interactive tree view</strong> — Explore complex, deeply nested JSON structures with an expandable tree visualization. Each node shows its type and value, making navigation intuitive.</li>
+        <li><strong>Data statistics</strong> — Get a quick overview of your JSON data with size, depth, key count, and type breakdown — useful for understanding unfamiliar data structures at a glance.</li>
+        <li><strong>Multiple input methods</strong> — Paste text, drag and drop files, upload from disk, or load from a URL. The tool adapts to your workflow.</li>
+        <li><strong>No dependencies</strong> — Built with vanilla HTML, CSS, and JavaScript. No frameworks, no build steps, no third-party libraries. The entire tool loads in milliseconds.</li>
+      </ul>
+
+      <h2>Use Cases</h2>
+      <h3>API Development &amp; Debugging</h3>
+      <p>When working with REST APIs or GraphQL, you often receive minified JSON responses that are difficult to read. Paste the response into JSON Prettier to instantly format and validate it. The tree view is especially helpful for navigating deeply nested API responses.</p>
+
+      <h3>Configuration File Editing</h3>
+      <p>Many applications use JSON for configuration — <code>package.json</code>, <code>tsconfig.json</code>, <code>appsettings.json</code>, and countless others. Use this tool to validate your changes before deploying, catching syntax errors like missing commas or mismatched brackets.</p>
+
+      <h3>Data Analysis &amp; Exploration</h3>
+      <p>When exploring unfamiliar JSON data sets, the Statistics tab gives you a quick overview of the data structure — how deep it nests, how many keys it contains, and what types of values are present. The tree view lets you drill down into specific branches without losing your place.</p>
+
+      <h3>Learning JSON</h3>
+      <p>If you are new to JSON, use the Sample button to load example data and experiment with formatting options. The real-time validation feature helps you learn JSON syntax by immediately showing you what is wrong and where the error is located.</p>
+
+      <h2>Technical Details</h2>
+      <p>JSON Prettier is a static website consisting of HTML, CSS, and JavaScript files. It is hosted on <strong>Cloudflare Pages</strong>, a global CDN that ensures fast load times from anywhere in the world. There is no server-side processing — every feature runs in your browser.</p>
+      <p>The tool uses the browser's built-in <code>JSON.parse()</code> and <code>JSON.stringify()</code> methods for parsing and formatting, ensuring full compatibility with the official JSON specification (<a href="https://datatracker.ietf.org/doc/html/rfc8259" target="_blank" rel="noopener">RFC 8259</a> / <a href="https://ecma-international.org/publications-and-standards/standards/ecma-404/" target="_blank" rel="noopener">ECMA-404</a>).</p>
+
+      <h2>Contact</h2>
+      <p>JSON Prettier is a free, open tool maintained by independent developers. If you have feedback, feature requests, or bug reports, please reach out through the channels available on the site.</p>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">Tool</div>
+        <ul class="footer__links">
+          <li><a href="/" class="footer__link">JSON Formatter</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
+          <li><a href="privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Resources</div>
+        <ul class="footer__links">
+          <li><a href="https://www.json.org/" class="footer__link" target="_blank" rel="noopener">JSON.org</a></li>
+          <li><a href="https://datatracker.ietf.org/doc/html/rfc8259" class="footer__link" target="_blank" rel="noopener">RFC 8259</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" class="footer__link" target="_blank" rel="noopener">MDN JSON Reference</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Standards</div>
+        <ul class="footer__links">
+          <li><a href="https://ecma-international.org/publications-and-standards/standards/ecma-404/" class="footer__link" target="_blank" rel="noopener">ECMA-404</a></li>
+          <li><a href="https://www.iso.org/standard/71616.html" class="footer__link" target="_blank" rel="noopener">ISO 21778:2017</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2025 JSON Prettier. All processing happens in your browser.</p>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const open = links.classList.toggle('nav__links--open');
+        toggle.setAttribute('aria-expanded', open);
+      });
+      document.addEventListener('click', e => {
+        if (!toggle.contains(e.target) && !links.contains(e.target)) {
+          links.classList.remove('nav__links--open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
