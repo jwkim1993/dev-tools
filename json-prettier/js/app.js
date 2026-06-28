@@ -4,7 +4,7 @@
   const { $, $$, showToast, copyText, downloadFile, debounce, escapeHtml } = Utils;
 
   let currentTab = 'formatted';
-  let outputMode = 'format'; // 'format' or 'minify'
+  let outputMode = 'format';
   let lastFormattedOutput = '';
   let lastParsedData = null;
 
@@ -266,22 +266,6 @@
     });
   }
 
-  function initNav() {
-    const toggle = $('#navToggle');
-    const links = $('#navLinks');
-    if (!toggle) return;
-    toggle.addEventListener('click', () => {
-      const open = links.classList.toggle('nav__links--open');
-      toggle.setAttribute('aria-expanded', open);
-    });
-    document.addEventListener('click', e => {
-      if (!toggle.contains(e.target) && !links.contains(e.target)) {
-        links.classList.remove('nav__links--open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
   function initDivider() {
     const divider = $('#editorDivider');
     const layout = $('#editorLayout');
@@ -414,7 +398,6 @@
   }
 
   function init() {
-    initNav();
     Editor.init('inputTextarea', 'lineNumbers', 'inputEditor');
     Editor.onInputChange(debounce(onRealtimeInput, 200));
     Editor.onCursorChange(pos => {

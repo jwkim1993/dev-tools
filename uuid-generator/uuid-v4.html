@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID Version 4 Generator &amp; Guide — Random UUID</title>
+  <meta name="description" content="Generate UUID v4 (random) identifiers and learn how they work. Understand cryptographic randomness, collision probability, and best practices. RFC 9562 compliant.">
+  <link rel="canonical" href="https://devtools.pages.dev/uuid-generator/uuid-v4.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="UUID Version 4 Generator & Guide — Random UUID">
+  <meta property="og:description" content="Generate UUID v4 identifiers and learn about random UUID generation, collision math, and use cases.">
+  <meta property="og:url" content="https://devtools.pages.dev/uuid-generator/uuid-v4.html">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Segoe UI,sans-serif' font-weight='700' font-size='16' fill='white'%3EID%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/uuid-generator/css/uuid-generator.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "What is a UUID Version 4?", "acceptedAnswer": {"@type": "Answer", "text": "A UUID Version 4 is a randomly generated universally unique identifier. It uses 122 bits of cryptographically secure random data, with 6 bits reserved for the version (0100) and variant (10) fields. It is the most widely used UUID version."}},
+      {"@type": "Question", "name": "What is the probability of a UUID v4 collision?", "acceptedAnswer": {"@type": "Answer", "text": "With 122 random bits, you would need to generate approximately 2.71 quintillion (2.71 × 10^18) UUIDs to have a 50% chance of a single collision. For practical purposes, UUID v4 collisions are considered impossible."}},
+      {"@type": "Question", "name": "Is UUID v4 cryptographically secure?", "acceptedAnswer": {"@type": "Answer", "text": "UUID v4 generated with crypto.getRandomValues() (as in this tool) uses the operating system's cryptographic random number generator, making the output suitable for security-sensitive applications."}},
+      {"@type": "Question", "name": "Why is UUID v4 the most popular version?", "acceptedAnswer": {"@type": "Answer", "text": "UUID v4 is popular because it is simple to implement, requires no coordination between generators, preserves privacy (no timestamp or machine info), and has virtually zero collision risk."}},
+      {"@type": "Question", "name": "Should I use UUID v4 or v7 for database primary keys?", "acceptedAnswer": {"@type": "Answer", "text": "For database primary keys, UUID v7 is generally preferred because its time-ordered structure results in sequential index writes, reducing B-tree fragmentation."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Tools</a></li>
+        <li><a href="/json-prettier/" class="nav__link">JSON Formatter</a></li>
+        <li><a href="/uuid-generator/" class="nav__link nav__link--active">UUID Generator</a></li>
+        <li><a href="/about.html" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="page-header__breadcrumb">
+        <a href="/uuid-generator/">UUID Generator</a> <span aria-hidden="true">/</span> Version 4
+      </div>
+      <h1 class="page-header__title">UUID Version 4: Random Identifiers</h1>
+      <p class="page-header__desc">The most widely used UUID version — generated entirely from cryptographically secure random numbers with virtually zero collision risk.</p>
+    </div>
+
+    <div class="uuid-display" id="singleDisplay">
+      <div class="uuid-display__value" id="singleUUID" aria-live="polite"></div>
+      <div class="uuid-display__actions">
+        <button class="btn btn--primary" id="btnGenerate">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 8a6 6 0 0111.2-3M14 8A6 6 0 012.8 11"/><path d="M14 3v4h-4M2 13V9h4"/></svg>
+          Generate v4
+        </button>
+        <button class="btn btn--default" id="btnCopy">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <article class="content">
+      <h2>What is a UUID Version 4?</h2>
+      <p>UUID Version 4 is a randomly generated universally unique identifier. Of its 128 bits, 122 are filled with cryptographically secure random data — only 6 bits are predetermined: 4 bits for the version field (<code>0100</code>, indicating version 4) and 2 bits for the variant field (<code>10</code>, indicating RFC 9562 compliance). This makes UUID v4 the simplest UUID version to generate and the most widely deployed across the software industry.</p>
+      <p>The simplicity of UUID v4 is its greatest strength. Unlike v1 (which requires a clock and node ID) or v7 (which requires a synchronized timestamp), v4 needs only a good source of randomness. Any device, on any network, at any time, can generate a UUID v4 without coordination, registration, or shared state.</p>
+
+      <h2>How UUID v4 is Generated</h2>
+      <p>The generation algorithm for UUID v4 is straightforward:</p>
+      <ol>
+        <li><strong>Generate 128 random bits</strong> — This generator uses <code>crypto.getRandomValues()</code>, which taps into the operating system's cryptographic random number generator (CSPRNG).</li>
+        <li><strong>Set the version nibble</strong> — Byte 6 is masked: the upper 4 bits are replaced with <code>0100</code> (decimal 4).</li>
+        <li><strong>Set the variant bits</strong> — Byte 8 is masked: the upper 2 bits are set to <code>10</code>.</li>
+      </ol>
+      <p>The result is a 128-bit value with 122 bits of entropy — enough randomness to make collisions effectively impossible in any practical scenario.</p>
+
+      <h2>Collision Probability</h2>
+      <p>The mathematics of UUID v4 collision probability follow the birthday problem. With 122 random bits, the UUID space contains 2<sup>122</sup> (approximately 5.3 × 10<sup>36</sup>) possible values. Key collision thresholds:</p>
+      <ul>
+        <li><strong>1 billion UUIDs</strong>: collision probability ≈ 10<sup>-19</sup> (essentially zero)</li>
+        <li><strong>1 trillion UUIDs</strong>: collision probability ≈ 10<sup>-13</sup> (still negligible)</li>
+        <li><strong>2.71 × 10<sup>18</sup> UUIDs</strong>: 50% collision probability (the birthday bound)</li>
+      </ul>
+
+      <h2>UUID v4 Structure</h2>
+      <table class="compare-table">
+        <thead><tr><th>Field</th><th>Bits</th><th>Content</th></tr></thead>
+        <tbody>
+          <tr><td>random_a</td><td>0–47</td><td>48 random bits</td></tr>
+          <tr><td>ver</td><td>48–51</td><td><code>0100</code> (version 4)</td></tr>
+          <tr><td>random_b</td><td>52–63</td><td>12 random bits</td></tr>
+          <tr><td>var</td><td>64–65</td><td><code>10</code> (RFC 9562 variant)</td></tr>
+          <tr><td>random_c</td><td>66–127</td><td>62 random bits</td></tr>
+        </tbody>
+      </table>
+
+      <h2>When to Use UUID v4</h2>
+      <ul>
+        <li><strong>API identifiers</strong> — Resource IDs in REST and GraphQL APIs where privacy and simplicity matter more than sortability.</li>
+        <li><strong>Session tokens and correlation IDs</strong> — When you need a unique, unguessable identifier that reveals nothing about the user or system.</li>
+        <li><strong>Distributed systems without coordination</strong> — Microservices that need to generate IDs independently without a shared sequence or database.</li>
+        <li><strong>Event sourcing and message queues</strong> — Unique event identifiers where order is determined by separate timestamps, not the ID itself.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What is a UUID Version 4?</h3>
+        <p class="faq-answer">A UUID Version 4 is a randomly generated universally unique identifier. It uses 122 bits of cryptographically secure random data, with 6 bits reserved for the version (0100) and variant (10) fields.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What is the probability of a UUID v4 collision?</h3>
+        <p class="faq-answer">With 122 random bits, you would need to generate approximately 2.71 quintillion (2.71 × 10<sup>18</sup>) UUIDs to have a 50% chance of a single collision.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is UUID v4 cryptographically secure?</h3>
+        <p class="faq-answer">UUID v4 generated with <code>crypto.getRandomValues()</code> (as in this tool) uses the operating system's cryptographic random number generator, making the output suitable for security-sensitive applications.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Should I use UUID v4 or v7 for database primary keys?</h3>
+        <p class="faq-answer">For database primary keys, UUID v7 is generally preferred because its time-ordered structure results in sequential index writes, reducing B-tree page splits and fragmentation.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">UUID Versions</div>
+        <ul class="footer__links">
+          <li><a href="/uuid-generator/uuid-v1.html" class="footer__link">UUID Version 1 Guide</a></li>
+          <li><a href="/uuid-generator/uuid-v4.html" class="footer__link">UUID Version 4 Guide</a></li>
+          <li><a href="/uuid-generator/uuid-v7.html" class="footer__link">UUID Version 7 Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2025 DevTools. All identifiers are generated client-side.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/uuid-generator/js/uuid.js"></script>
+  <script>
+    (() => {
+      const { $, showToast, copyText } = Utils;
+      function generate() { $('#singleUUID').textContent = UUID.generate('v4'); }
+      generate();
+      $('#btnGenerate').addEventListener('click', generate);
+      $('#btnCopy').addEventListener('click', () => copyText($('#singleUUID').textContent));
+    })();
+  </script>
+</body>
+</html>

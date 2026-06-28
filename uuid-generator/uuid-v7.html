@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID Version 7 Generator &amp; Guide — Time-Ordered UUID</title>
+  <meta name="description" content="Generate UUID v7 (time-ordered) identifiers and learn how they work. Understand Unix timestamp encoding, database benefits, and comparison with v1 and v4. RFC 9562 compliant.">
+  <link rel="canonical" href="https://devtools.pages.dev/uuid-generator/uuid-v7.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="UUID Version 7 Generator & Guide — Time-Ordered UUID">
+  <meta property="og:description" content="Generate UUID v7 identifiers and learn about time-ordered UUID structure, database benefits, and migration from v4.">
+  <meta property="og:url" content="https://devtools.pages.dev/uuid-generator/uuid-v7.html">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Segoe UI,sans-serif' font-weight='700' font-size='16' fill='white'%3EID%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/uuid-generator/css/uuid-generator.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "What is a UUID Version 7?", "acceptedAnswer": {"@type": "Answer", "text": "UUID Version 7 is a time-ordered UUID format that combines a 48-bit Unix timestamp (millisecond precision) with 74 bits of random data. It was introduced in RFC 9562 as a modern alternative to UUID v1."}},
+      {"@type": "Question", "name": "Why is UUID v7 better for databases than v4?", "acceptedAnswer": {"@type": "Answer", "text": "UUID v7's time-ordered structure means new IDs are always greater than previous ones, resulting in sequential B-tree index inserts. UUID v4's random values cause scattered inserts that degrade write performance by 2-10x on large tables."}},
+      {"@type": "Question", "name": "Can I extract the timestamp from a UUID v7?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The first 48 bits of a UUID v7 contain a Unix timestamp in milliseconds. You can extract it by parsing the first 12 hex characters and converting to a date."}},
+      {"@type": "Question", "name": "Should I migrate from UUID v4 to v7?", "acceptedAnswer": {"@type": "Answer", "text": "Consider migrating if you use UUIDs as database primary keys and experience write performance issues from index fragmentation. Existing v4 UUIDs can coexist with new v7 UUIDs in the same column."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Tools</a></li>
+        <li><a href="/json-prettier/" class="nav__link">JSON Formatter</a></li>
+        <li><a href="/uuid-generator/" class="nav__link nav__link--active">UUID Generator</a></li>
+        <li><a href="/about.html" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="page-header__breadcrumb">
+        <a href="/uuid-generator/">UUID Generator</a> <span aria-hidden="true">/</span> Version 7
+      </div>
+      <h1 class="page-header__title">UUID Version 7: Time-Ordered Identifiers</h1>
+      <p class="page-header__desc">A modern UUID format combining Unix timestamps with randomness — designed for database-friendly sequential ordering without sacrificing uniqueness.</p>
+    </div>
+
+    <div class="uuid-display" id="singleDisplay">
+      <div class="uuid-display__value" id="singleUUID" aria-live="polite"></div>
+      <div class="uuid-display__actions">
+        <button class="btn btn--primary" id="btnGenerate">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 8a6 6 0 0111.2-3M14 8A6 6 0 012.8 11"/><path d="M14 3v4h-4M2 13V9h4"/></svg>
+          Generate v7
+        </button>
+        <button class="btn btn--default" id="btnCopy">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <article class="content">
+      <h2>What is a UUID Version 7?</h2>
+      <p>UUID Version 7 is a time-ordered identifier format introduced in RFC 9562 (published May 2024). It addresses a long-standing limitation of UUID v4 — the lack of natural ordering — by embedding a 48-bit Unix timestamp (millisecond precision) in the most significant bits, followed by random data in the remaining bits.</p>
+
+      <h2>How UUID v7 is Generated</h2>
+      <ol>
+        <li><strong>Capture the current Unix timestamp</strong> — The current time is recorded as milliseconds since the Unix epoch (January 1, 1970, 00:00:00 UTC).</li>
+        <li><strong>Fill the random payload</strong> — The remaining 74 bits are filled with cryptographically secure random data using <code>crypto.getRandomValues()</code>.</li>
+        <li><strong>Set the version nibble</strong> — Bits 48–51 are set to <code>0111</code> (decimal 7).</li>
+        <li><strong>Set the variant bits</strong> — Bits 64–65 are set to <code>10</code>, indicating RFC 9562 compliance.</li>
+      </ol>
+
+      <h2>UUID v7 Byte Structure</h2>
+      <table class="compare-table">
+        <thead><tr><th>Field</th><th>Bits</th><th>Content</th></tr></thead>
+        <tbody>
+          <tr><td>unix_ts_ms</td><td>0–47</td><td>48-bit Unix timestamp in milliseconds</td></tr>
+          <tr><td>ver</td><td>48–51</td><td><code>0111</code> (version 7)</td></tr>
+          <tr><td>rand_a</td><td>52–63</td><td>12 random bits</td></tr>
+          <tr><td>var</td><td>64–65</td><td><code>10</code> (RFC 9562 variant)</td></tr>
+          <tr><td>rand_b</td><td>66–127</td><td>62 random bits</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Why UUID v7 is Better for Databases</h2>
+      <p>UUID v4's random distribution causes B-tree page splits on every insert. UUID v7's sequential nature means inserts always go to the end of the index — the same pattern as auto-incrementing integers. Benchmarks consistently show 2–10x write throughput improvement on large tables.</p>
+
+      <h2>UUID v7 vs v1</h2>
+      <table class="compare-table">
+        <thead><tr><th>Aspect</th><th>Version 1</th><th>Version 7</th></tr></thead>
+        <tbody>
+          <tr><td>Timestamp epoch</td><td>Gregorian (1582-10-15)</td><td>Unix (1970-01-01)</td></tr>
+          <tr><td>Timestamp precision</td><td>100 nanoseconds</td><td>1 millisecond</td></tr>
+          <tr><td>Byte ordering</td><td>Non-sequential (time_low first)</td><td>Sequential (MSB first)</td></tr>
+          <tr><td>String sortable</td><td>No</td><td>Yes</td></tr>
+          <tr><td>Node field</td><td>MAC address or random</td><td>Random only</td></tr>
+          <tr><td>Specification</td><td>RFC 4122 (2005) / RFC 9562</td><td>RFC 9562 (2024)</td></tr>
+        </tbody>
+      </table>
+
+      <h2>When to Use UUID v7</h2>
+      <ul>
+        <li><strong>Database primary keys</strong> — Sequential ordering minimizes index fragmentation and maximizes write throughput.</li>
+        <li><strong>Event logs and time-series data</strong> — Natural chronological ordering simplifies queries and partitioning.</li>
+        <li><strong>Distributed systems requiring ordered IDs</strong> — Multiple nodes can generate locally-ordered IDs without coordination.</li>
+        <li><strong>Replacing ULID or custom Snowflake IDs</strong> — UUID v7 provides the same ordering benefits within the standard UUID format.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What is a UUID Version 7?</h3>
+        <p class="faq-answer">UUID Version 7 is a time-ordered UUID format that combines a 48-bit Unix timestamp (millisecond precision) with 74 bits of random data. It was introduced in RFC 9562 as a modern alternative to UUID v1.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Why is UUID v7 better for databases than v4?</h3>
+        <p class="faq-answer">UUID v7's time-ordered structure means new IDs are always greater than previous ones, resulting in sequential B-tree index inserts. UUID v4's random values cause scattered inserts that degrade write performance by 2–10x on large tables.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Can I extract the timestamp from a UUID v7?</h3>
+        <p class="faq-answer">Yes. The first 48 bits (12 hex characters) of a UUID v7 contain a Unix timestamp in milliseconds. To extract it, parse the hex value and convert it with <code>new Date(parseInt(uuid.slice(0,8) + uuid.slice(9,13), 16))</code>.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Should I migrate from UUID v4 to v7?</h3>
+        <p class="faq-answer">Consider migrating if you use UUIDs as database primary keys and experience write performance issues from index fragmentation. Existing v4 UUIDs can coexist with new v7 UUIDs in the same column.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">UUID Versions</div>
+        <ul class="footer__links">
+          <li><a href="/uuid-generator/uuid-v1.html" class="footer__link">UUID Version 1 Guide</a></li>
+          <li><a href="/uuid-generator/uuid-v4.html" class="footer__link">UUID Version 4 Guide</a></li>
+          <li><a href="/uuid-generator/uuid-v7.html" class="footer__link">UUID Version 7 Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2025 DevTools. All identifiers are generated client-side.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/uuid-generator/js/uuid.js"></script>
+  <script>
+    (() => {
+      const { $, showToast, copyText } = Utils;
+      function generate() { $('#singleUUID').textContent = UUID.generate('v7'); }
+      generate();
+      $('#btnGenerate').addEventListener('click', generate);
+      $('#btnCopy').addEventListener('click', () => copyText($('#singleUUID').textContent));
+    })();
+  </script>
+</body>
+</html>

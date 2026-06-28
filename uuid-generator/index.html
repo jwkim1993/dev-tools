@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID Generator — Generate UUID v1, v4, v7 Online Free</title>
+  <meta name="description" content="Free online UUID generator. Create UUID v1 (time-based), v4 (random), and v7 (time-ordered) identifiers instantly. Bulk generation, format options, and one-click copy.">
+  <meta name="keywords" content="UUID generator, GUID generator, UUID v4, UUID v1, UUID v7, unique identifier, random UUID, bulk UUID">
+  <link rel="canonical" href="https://devtools.pages.dev/uuid-generator/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="UUID Generator — Generate UUID v1, v4, v7 Online Free">
+  <meta property="og:description" content="Free online UUID generator. Create single or bulk UUIDs with format options and one-click copy.">
+  <meta property="og:url" content="https://devtools.pages.dev/uuid-generator/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UUID Generator — Generate UUID v1, v4, v7 Online Free">
+  <meta name="twitter:description" content="Free online UUID generator with bulk generation and format options.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Segoe UI,sans-serif' font-weight='700' font-size='16' fill='white'%3EID%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/uuid-generator/css/uuid-generator.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "UUID Generator",
+    "url": "https://devtools.pages.dev/uuid-generator/",
+    "description": "Generate UUID v1, v4, and v7 identifiers instantly. Free online UUID generator with bulk generation, format options, and one-click copy.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Tools</a></li>
+        <li><a href="/json-prettier/" class="nav__link">JSON Formatter</a></li>
+        <li><a href="/uuid-generator/" class="nav__link nav__link--active">UUID Generator</a></li>
+        <li><a href="/about.html" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1 class="hero__title">UUID Generator</h1>
+      <p class="hero__subtitle">Generate universally unique identifiers instantly — secure, client-side, RFC&nbsp;9562&nbsp;compliant</p>
+    </section>
+
+    <!-- COMMAND BAR -->
+    <div class="command-bar" role="toolbar" aria-label="UUID generation controls">
+      <div class="command-bar__group">
+        <div class="version-toggle" role="group" aria-label="UUID version">
+          <button class="version-toggle__btn" aria-pressed="true" data-version="v4">v4 Random</button>
+          <button class="version-toggle__btn" aria-pressed="false" data-version="v1">v1 Time</button>
+          <button class="version-toggle__btn" aria-pressed="false" data-version="v7">v7 Ordered</button>
+        </div>
+      </div>
+      <div class="command-bar__separator" aria-hidden="true"></div>
+      <div class="command-bar__group">
+        <label class="command-bar__label" for="caseSelect">Case</label>
+        <select class="select" id="caseSelect">
+          <option value="lower">lowercase</option>
+          <option value="upper">UPPERCASE</option>
+        </select>
+      </div>
+      <div class="command-bar__group">
+        <label class="command-bar__label" for="hyphensSelect">Format</label>
+        <select class="select" id="hyphensSelect">
+          <option value="hyphens">With hyphens</option>
+          <option value="plain">No hyphens</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SINGLE UUID -->
+    <div class="uuid-display" id="singleDisplay">
+      <div class="uuid-display__value" id="singleUUID" aria-live="polite"></div>
+      <div class="uuid-display__actions">
+        <button class="btn btn--primary" id="btnGenerate">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 8a6 6 0 0111.2-3M14 8A6 6 0 012.8 11"/><path d="M14 3v4h-4M2 13V9h4"/></svg>
+          Generate
+        </button>
+        <button class="btn btn--default" id="btnCopy">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <!-- BULK -->
+    <section class="section">
+      <h2 class="section__title">Bulk Generation</h2>
+      <div class="bulk bulk--empty" id="bulkContainer">
+        <div class="bulk__controls">
+          <label for="bulkCount" class="command-bar__label">Count</label>
+          <input type="number" class="text-field" id="bulkCount" value="10" min="1" max="10000" aria-label="Number of UUIDs to generate">
+          <button class="btn btn--primary" id="btnBulkGenerate">Generate Bulk</button>
+          <div class="bulk__actions" id="bulkActions" style="display:none">
+            <button class="btn btn--default" id="btnCopyAll">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+              Copy All
+            </button>
+            <button class="btn btn--default" id="btnDownload">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v9M4 8l4 4 4-4"/><path d="M2 13h12"/></svg>
+              Download
+            </button>
+          </div>
+        </div>
+        <div class="bulk__count" id="bulkCountLabel"></div>
+        <div class="uuid-chips" id="bulkResults">
+          <div class="bulk__empty" id="bulkEmpty">
+            <svg class="bulk__empty-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="8" width="36" height="10" rx="3"/>
+              <rect x="6" y="22" width="36" height="10" rx="3"/>
+              <rect x="6" y="36" width="24" height="4" rx="2" opacity="0.4"/>
+            </svg>
+            <p class="bulk__empty-text">Generate multiple UUIDs at once. Set the count above and click Generate Bulk.</p>
+            <p class="bulk__empty-hint">Up to 10,000 UUIDs &middot; Copy all or download as .txt</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATIONAL CONTENT -->
+    <section class="section">
+      <h2 class="section__title">What is a UUID?</h2>
+      <div class="content">
+        <p>A UUID (Universally Unique Identifier) is a 128-bit identifier standardized by RFC 9562 (formerly RFC 4122). UUIDs are designed to be unique across all systems without requiring a central registration authority. They are widely used in databases, distributed systems, APIs, and software development to identify resources, records, and entities without the risk of collision.</p>
+        <p>The standard UUID format consists of 32 hexadecimal digits displayed in five groups separated by hyphens, following the pattern <code>8-4-4-4-12</code>. For example: <code>550e8400-e29b-41d4-a716-446655440000</code>. This format is consistent across all UUID versions and is recognized by virtually every programming language, database, and framework.</p>
+        <p>UUIDs solve a fundamental problem in distributed computing: how to create identifiers that are guaranteed to be unique without coordination. Unlike auto-incrementing integers that require a central database, UUIDs can be generated independently on any device, at any time, and still maintain practical uniqueness. The probability of collision for random UUIDs (v4) is astronomically small — you would need to generate approximately 2.71 quintillion UUIDs to have a 50% chance of a single duplicate.</p>
+      </div>
+    </section>
+
+    <!-- UUID STRUCTURE -->
+    <section class="section">
+      <h2 class="section__title">UUID Format Structure</h2>
+      <div class="content">
+        <p>Every UUID follows the same 128-bit structure, divided into five segments. The version nibble (bits 48–51) identifies the generation algorithm, while the variant bits (bits 64–65) confirm RFC compliance.</p>
+      </div>
+      <div class="uuid-structure" role="img" aria-label="UUID byte layout diagram">
+        <div class="uuid-segment">
+          <div class="uuid-segment__block">xxxxxxxx</div>
+          <div class="uuid-segment__label">time_low<br>32 bits</div>
+        </div>
+        <div class="uuid-segment">
+          <div class="uuid-segment__block uuid-segment__block--alt">xxxx</div>
+          <div class="uuid-segment__label">time_mid<br>16 bits</div>
+        </div>
+        <div class="uuid-segment">
+          <div class="uuid-segment__block">Vxxx</div>
+          <div class="uuid-segment__label">version +<br>time_hi (16)</div>
+        </div>
+        <div class="uuid-segment">
+          <div class="uuid-segment__block uuid-segment__block--alt">yxxx</div>
+          <div class="uuid-segment__label">variant +<br>clock (16)</div>
+        </div>
+        <div class="uuid-segment">
+          <div class="uuid-segment__block">xxxxxxxxxxxx</div>
+          <div class="uuid-segment__label">node<br>48 bits</div>
+        </div>
+      </div>
+      <div class="content">
+        <p>In this diagram, <strong>V</strong> represents the version nibble (1, 4, or 7), and <strong>y</strong> represents the variant bits. The remaining <strong>x</strong> positions hold version-specific data — timestamps for v1 and v7, or cryptographically random bits for v4.</p>
+      </div>
+    </section>
+
+    <!-- VERSION CARDS -->
+    <section class="section">
+      <h2 class="section__title">UUID Versions Compared</h2>
+      <div class="card-grid">
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l2.5 2.5"/></svg>
+          </div>
+          <h3 class="info-card__title">Version 1 <span class="badge badge--primary">Time-based</span></h3>
+          <p class="info-card__text">Generated from a timestamp (100-nanosecond intervals since October 15, 1582) combined with a clock sequence and node identifier. Provides natural chronological ordering and embeds creation time, but may expose system information through the node field.</p>
+          <a href="/uuid-generator/uuid-v1.html" class="info-card__link">Learn more &rarr;</a>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l3 3M13 4l-3 3M4 16l3-3M13 16l-3-3"/><circle cx="10" cy="10" r="2"/></svg>
+          </div>
+          <h3 class="info-card__title">Version 4 <span class="badge badge--success">Random</span></h3>
+          <p class="info-card__text">Generated entirely from cryptographically secure random numbers. The most widely used UUID version — simple, fast, and privacy-preserving. No timestamp or machine information is embedded, making collisions theoretically possible but practically impossible.</p>
+          <a href="/uuid-generator/uuid-v4.html" class="info-card__link">Learn more &rarr;</a>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 10h12"/><path d="M10 4v12"/><path d="M6 6l8 8"/></svg>
+          </div>
+          <h3 class="info-card__title">Version 7 <span class="badge badge--primary">Time-ordered</span></h3>
+          <p class="info-card__text">A modern UUID format combining a Unix timestamp (millisecond precision) with random data. Designed for database-friendly sequential ordering while maintaining randomness. Ideal for primary keys in distributed databases where index locality matters.</p>
+          <a href="/uuid-generator/uuid-v7.html" class="info-card__link">Learn more &rarr;</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="section">
+      <h2 class="section__title">When to Use Each Version</h2>
+      <div class="content">
+        <p>Choosing the right UUID version depends on your use case. Here is a quick comparison to help you decide which version fits your needs best.</p>
+      </div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Version 1</th>
+            <th>Version 4</th>
+            <th>Version 7</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Generation method</td>
+            <td>Timestamp + node</td>
+            <td>Random</td>
+            <td>Timestamp + random</td>
+          </tr>
+          <tr>
+            <td>Sortable by time</td>
+            <td>Partially</td>
+            <td>No</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Database index performance</td>
+            <td>Good</td>
+            <td>Poor (random scatter)</td>
+            <td>Excellent</td>
+          </tr>
+          <tr>
+            <td>Privacy</td>
+            <td>May expose time/node</td>
+            <td>Fully anonymous</td>
+            <td>Exposes creation time</td>
+          </tr>
+          <tr>
+            <td>Collision risk</td>
+            <td>Very low</td>
+            <td>Negligible</td>
+            <td>Negligible</td>
+          </tr>
+          <tr>
+            <td>Best for</td>
+            <td>Audit trails, legacy systems</td>
+            <td>General purpose, APIs</td>
+            <td>Database PKs, event logs</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section">
+      <h2 class="section__title">Features of This Generator</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Client-side generation</strong> — All UUIDs are generated entirely in your browser using the Web Crypto API (<code>crypto.getRandomValues</code>). No data is sent to any server, ensuring complete privacy and instant performance.</li>
+          <li><strong>RFC 9562 compliant</strong> — Every UUID generated by this tool conforms to the latest UUID specification (RFC 9562, which supersedes RFC 4122), with correct version and variant bits set.</li>
+          <li><strong>Multiple versions</strong> — Generate UUID v1 (time-based), v4 (random), and v7 (time-ordered random) from a single interface with instant tab switching.</li>
+          <li><strong>Bulk generation</strong> — Generate up to 10,000 UUIDs at once, displayed in a scrollable grid with individual and batch copy options, plus file download.</li>
+          <li><strong>Format options</strong> — Toggle between uppercase and lowercase output, and choose whether to include hyphens, so UUIDs fit directly into your code, database, or configuration files.</li>
+          <li><strong>Cryptographically secure</strong> — Uses the browser's built-in cryptographic random number generator, not <code>Math.random()</code>, ensuring UUIDs suitable for security-sensitive applications.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">UUID Versions</div>
+        <ul class="footer__links">
+          <li><a href="/uuid-generator/uuid-v1.html" class="footer__link">UUID Version 1 Guide</a></li>
+          <li><a href="/uuid-generator/uuid-v4.html" class="footer__link">UUID Version 4 Guide</a></li>
+          <li><a href="/uuid-generator/uuid-v7.html" class="footer__link">UUID Version 7 Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Tools</div>
+        <ul class="footer__links">
+          <li><a href="/json-prettier/" class="footer__link">JSON Formatter</a></li>
+          <li><a href="/uuid-generator/" class="footer__link">UUID Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+          <li><a href="https://www.rfc-editor.org/rfc/rfc9562" class="footer__link" rel="noopener noreferrer" target="_blank">RFC 9562</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2025 DevTools. All identifiers are generated client-side. No data is collected or stored.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/uuid-generator/js/uuid.js"></script>
+  <script src="/uuid-generator/js/app.js"></script>
+</body>
+</html>

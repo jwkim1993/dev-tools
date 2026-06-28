@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID Version 1 Generator &amp; Guide — Time-Based UUID</title>
+  <meta name="description" content="Generate UUID v1 (time-based) identifiers and learn how they work. Understand the timestamp, clock sequence, and node fields. RFC 9562 compliant.">
+  <link rel="canonical" href="https://devtools.pages.dev/uuid-generator/uuid-v1.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="UUID Version 1 Generator & Guide — Time-Based UUID">
+  <meta property="og:description" content="Generate UUID v1 identifiers and learn about time-based UUID structure, generation, and use cases.">
+  <meta property="og:url" content="https://devtools.pages.dev/uuid-generator/uuid-v1.html">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Segoe UI,sans-serif' font-weight='700' font-size='16' fill='white'%3EID%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/uuid-generator/css/uuid-generator.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "What is a UUID Version 1?", "acceptedAnswer": {"@type": "Answer", "text": "A UUID Version 1 is a time-based universally unique identifier generated from a 60-bit timestamp, a 14-bit clock sequence, and a 48-bit node identifier. The timestamp measures 100-nanosecond intervals since October 15, 1582."}},
+      {"@type": "Question", "name": "Does UUID v1 expose my MAC address?", "acceptedAnswer": {"@type": "Answer", "text": "Historically, UUID v1 used the network interface MAC address as the node field. This generator uses a random node with the multicast bit set, as permitted by RFC 9562 Section 6.10, so no hardware information is exposed."}},
+      {"@type": "Question", "name": "Are UUID v1 values sortable?", "acceptedAnswer": {"@type": "Answer", "text": "UUID v1 contains a timestamp, but the bytes are not arranged in chronological order in the standard string representation. The time_low field comes first, which changes most rapidly. For time-sortable UUIDs, consider UUID v7."}},
+      {"@type": "Question", "name": "When should I use UUID v1 instead of v4?", "acceptedAnswer": {"@type": "Answer", "text": "Use UUID v1 when you need to extract creation timestamps from identifiers, when working with legacy systems that expect v1, or when you want partial chronological ordering. For general purpose use, UUID v4 is simpler and more private."}},
+      {"@type": "Question", "name": "Can two UUID v1 values collide?", "acceptedAnswer": {"@type": "Answer", "text": "UUID v1 collisions are extremely unlikely. The combination of high-resolution timestamp, random clock sequence, and unique node identifier makes duplicates virtually impossible in normal operation."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Tools</a></li>
+        <li><a href="/json-prettier/" class="nav__link">JSON Formatter</a></li>
+        <li><a href="/uuid-generator/" class="nav__link nav__link--active">UUID Generator</a></li>
+        <li><a href="/about.html" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="page-header__breadcrumb">
+        <a href="/uuid-generator/">UUID Generator</a> <span aria-hidden="true">/</span> Version 1
+      </div>
+      <h1 class="page-header__title">UUID Version 1: Time-Based Identifiers</h1>
+      <p class="page-header__desc">Learn how UUID v1 combines a high-resolution timestamp with a node identifier to produce unique, time-traceable identifiers.</p>
+    </div>
+
+    <div class="uuid-display" id="singleDisplay">
+      <div class="uuid-display__value" id="singleUUID" aria-live="polite"></div>
+      <div class="uuid-display__actions">
+        <button class="btn btn--primary" id="btnGenerate">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 8a6 6 0 0111.2-3M14 8A6 6 0 012.8 11"/><path d="M14 3v4h-4M2 13V9h4"/></svg>
+          Generate v1
+        </button>
+        <button class="btn btn--default" id="btnCopy">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <article class="content">
+      <h2>What is a UUID Version 1?</h2>
+      <p>UUID Version 1 is a time-based identifier defined in RFC 9562 (and its predecessor RFC 4122). It generates a 128-bit value by combining three components: a 60-bit timestamp representing 100-nanosecond intervals since the UUID epoch (October 15, 1582, 00:00:00 UTC), a 14-bit clock sequence to avoid duplicates when the clock is adjusted, and a 48-bit node identifier that traditionally represents the generating machine's network MAC address.</p>
+      <p>The UUID epoch of October 15, 1582, was chosen because it marks the date of the Gregorian calendar reform. This historical anchor gives UUID v1 an enormous timestamp range — enough to represent dates well into the future without overflow.</p>
+
+      <h2>How UUID v1 is Generated</h2>
+      <p>The generation process for UUID v1 follows a precise algorithm:</p>
+      <ol>
+        <li><strong>Obtain the current timestamp</strong> — The system clock is read and converted to 100-nanosecond intervals since the UUID epoch. In JavaScript, <code>Date.now()</code> provides millisecond precision, which is then multiplied by 10,000 and offset by the epoch difference (122,192,928,000,000,000 intervals between the Gregorian epoch and Unix epoch).</li>
+        <li><strong>Set the clock sequence</strong> — A 14-bit value that increments when the system clock is set backward or the node ID changes. This prevents duplicate UUIDs when timestamps repeat. In this browser-based generator, the clock sequence is randomized per generation for simplicity.</li>
+        <li><strong>Determine the node identifier</strong> — Traditionally the 48-bit IEEE 802 MAC address of the generating machine. Since browsers cannot access MAC addresses, this generator uses a random 48-bit value with the multicast bit set (bit 0 of the first octet = 1), as explicitly permitted by RFC 9562 Section 6.10.</li>
+        <li><strong>Assemble the UUID</strong> — The timestamp is split across three fields (time_low, time_mid, time_hi_and_version), the version nibble is set to <code>0x1</code>, the variant bits are set to <code>0b10</code>, and all fields are packed into the 128-bit structure.</li>
+      </ol>
+
+      <h2>UUID v1 Byte Structure</h2>
+      <p>The 128 bits of a UUID v1 are organized as follows:</p>
+      <table class="compare-table">
+        <thead><tr><th>Field</th><th>Bits</th><th>Bytes</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>time_low</td><td>0–31</td><td>0–3</td><td>Low 32 bits of the timestamp</td></tr>
+          <tr><td>time_mid</td><td>32–47</td><td>4–5</td><td>Middle 16 bits of the timestamp</td></tr>
+          <tr><td>time_hi_and_version</td><td>48–63</td><td>6–7</td><td>High 12 bits of timestamp + 4-bit version (0001)</td></tr>
+          <tr><td>clock_seq_hi_and_variant</td><td>64–71</td><td>8</td><td>High 6 bits of clock sequence + 2-bit variant (10)</td></tr>
+          <tr><td>clock_seq_low</td><td>72–79</td><td>9</td><td>Low 8 bits of clock sequence</td></tr>
+          <tr><td>node</td><td>80–127</td><td>10–15</td><td>48-bit node identifier (MAC or random)</td></tr>
+        </tbody>
+      </table>
+      <p>Notice that the timestamp is split non-contiguously: the least significant bits (time_low) come first in the UUID string. This means UUID v1 strings do not sort chronologically by default — a key difference from UUID v7, which places the timestamp in the most significant bits for natural sorting.</p>
+
+      <h2>When to Use UUID v1</h2>
+      <p>UUID v1 is well-suited for scenarios where you need to extract the creation time from an identifier after the fact. Common use cases include:</p>
+      <ul>
+        <li><strong>Audit trails and compliance logs</strong> — The embedded timestamp lets you determine when a record was created without relying on a separate column.</li>
+        <li><strong>Legacy system integration</strong> — Many enterprise systems, including Apache Cassandra's default TimeUUID type, expect UUID v1 format.</li>
+        <li><strong>Distributed event ordering</strong> — While not perfectly sortable as strings, the timestamp can be extracted and compared programmatically for loose chronological ordering.</li>
+      </ul>
+      <p>Avoid UUID v1 when privacy is a concern (the timestamp reveals creation time) or when you need efficient database index performance with standard B-tree indexes (use UUID v7 instead).</p>
+
+      <h2>Privacy Considerations</h2>
+      <p>UUID v1 inherently encodes the creation timestamp, which can reveal when an entity was created. In the original specification, the node field contained the generating machine's MAC address, which could theoretically be used to identify the hardware. This generator mitigates the MAC concern by using random node values, but the timestamp remains embedded. If creation time is sensitive information, consider using UUID v4 (fully random) instead.</p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What is a UUID Version 1?</h3>
+        <p class="faq-answer">A UUID Version 1 is a time-based universally unique identifier generated from a 60-bit timestamp, a 14-bit clock sequence, and a 48-bit node identifier. The timestamp measures 100-nanosecond intervals since October 15, 1582, giving it both uniqueness and time-traceability.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Does UUID v1 expose my MAC address?</h3>
+        <p class="faq-answer">Historically, UUID v1 used the network interface MAC address as the node field. This generator uses a random node with the multicast bit set, as permitted by RFC 9562 Section 6.10, so no hardware information is exposed.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Are UUID v1 values sortable?</h3>
+        <p class="faq-answer">UUID v1 contains a timestamp, but the bytes are not arranged in chronological order in the standard string representation. The time_low field comes first, which changes most rapidly. For truly time-sortable UUIDs, consider UUID v7, which places the timestamp in the most significant bits.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">When should I use UUID v1 instead of v4?</h3>
+        <p class="faq-answer">Use UUID v1 when you need to extract creation timestamps from identifiers, when working with legacy systems that expect v1 format (like Apache Cassandra's TimeUUID), or when you want partial chronological ordering. For general purpose use where privacy matters, UUID v4 is simpler and safer.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Can two UUID v1 values collide?</h3>
+        <p class="faq-answer">UUID v1 collisions are extremely unlikely. The combination of a high-resolution timestamp (100-nanosecond precision), a random clock sequence, and a unique node identifier makes duplicates virtually impossible in normal operation, even across distributed systems.</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">UUID Versions</div>
+        <ul class="footer__links">
+          <li><a href="/uuid-generator/uuid-v1.html" class="footer__link">UUID Version 1 Guide</a></li>
+          <li><a href="/uuid-generator/uuid-v4.html" class="footer__link">UUID Version 4 Guide</a></li>
+          <li><a href="/uuid-generator/uuid-v7.html" class="footer__link">UUID Version 7 Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2025 DevTools. All identifiers are generated client-side.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/uuid-generator/js/uuid.js"></script>
+  <script>
+    (() => {
+      const { $, showToast, copyText } = Utils;
+      function generate() { $('#singleUUID').textContent = UUID.generate('v1'); }
+      generate();
+      $('#btnGenerate').addEventListener('click', generate);
+      $('#btnCopy').addEventListener('click', () => copyText($('#singleUUID').textContent));
+    })();
+  </script>
+</body>
+</html>

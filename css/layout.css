@@ -109,7 +109,7 @@ img {
 /* HERO */
 .hero {
   text-align: center;
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--space-8);
 }
 .hero__title {
   font-size: var(--text-display-size);
@@ -135,6 +135,12 @@ img {
   line-height: var(--text-heading-lh);
   color: var(--color-ink);
   margin-bottom: var(--space-4);
+}
+.section__subtitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: var(--space-3);
 }
 
 /* EDITOR LAYOUT */
