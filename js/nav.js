@@ -6,6 +6,7 @@
     { href: '/json-prettier/', label: 'JSON Formatter' },
     { href: '/uuid-generator/', label: 'UUID Generator' },
     { href: '/jwt-decoder/', label: 'JWT Decoder' },
+    { href: '/cron-expression/', label: 'Cron Expression' },
     { href: '/about.html', label: 'About' },
   ];
 

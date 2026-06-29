@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cron Expression Generator &amp; Parser — Build, Validate, and Explain Cron Schedules Online Free</title>
+  <meta name="description" content="Free online cron expression tool. Parse cron expressions into human-readable descriptions, build cron schedules visually, and see next execution times. Supports standard 5-field cron syntax. No data sent to any server.">
+  <meta name="keywords" content="cron expression generator, cron parser, cron validator, cron schedule builder, crontab, cron syntax, cron job, cron online, cron next run, cron expression explained, free cron tool">
+  <link rel="canonical" href="https://devtools.pages.dev/cron-expression/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cron Expression Generator & Parser — Build and Explain Cron Schedules Online">
+  <meta property="og:description" content="Free online cron tool. Parse cron expressions into plain English, build schedules visually, and preview next execution times. 100% client-side.">
+  <meta property="og:url" content="https://devtools.pages.dev/cron-expression/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cron Expression Generator & Parser — Free Online Cron Tool">
+  <meta name="twitter:description" content="Parse, build, and validate cron expressions in your browser. Free, private, no sign-up.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Ccircle cx='16' cy='16' r='9' stroke='white' stroke-width='2' fill='none'/%3E%3Cpath d='M16 10v6l4 3' stroke='white' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/cron-expression/css/cron.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Cron Expression Generator & Parser",
+    "url": "https://devtools.pages.dev/cron-expression/",
+    "description": "Free online tool to parse, build, and validate cron expressions. Convert cron syntax to human-readable descriptions, build cron schedules with a visual interface, and preview next execution times. All processing happens client-side in your browser.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a cron expression?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A cron expression is a string of five fields separated by spaces that defines a schedule for recurring tasks. The five fields represent minute (0-59), hour (0-23), day of month (1-31), month (1-12), and day of week (0-6, where 0 is Sunday). Cron expressions are used in Unix/Linux cron jobs, CI/CD pipelines, task schedulers, and cloud services like AWS CloudWatch, Google Cloud Scheduler, and Azure Functions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I read a cron expression?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Read a cron expression from left to right: minute, hour, day of month, month, day of week. An asterisk (*) means 'every value'. For example, '30 9 * * 1-5' means 'at minute 30, hour 9, every day of month, every month, Monday through Friday' — or simply 'at 9:30 AM on weekdays'. Use a slash (/) for step values like '*/5' meaning 'every 5', a comma (,) for lists like '1,15' meaning 'on the 1st and 15th', and a hyphen (-) for ranges like '1-5' meaning '1 through 5'."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What do the special characters in cron mean?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cron expressions use four special characters: asterisk (*) matches every possible value in a field; slash (/) defines step intervals (e.g., */15 in the minute field means every 15 minutes); comma (,) separates individual values in a list (e.g., 1,3,5 means on the 1st, 3rd, and 5th); hyphen (-) defines an inclusive range (e.g., 1-5 in the day-of-week field means Monday through Friday)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it safe to use this cron tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. This tool processes everything entirely in your browser using JavaScript. No data is transmitted to any server. The cron expression you enter and the schedules you build are parsed and calculated locally. You can verify this by checking the browser's network tab. The tool works offline after the initial page load."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between 5-field and 6-field cron?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard Unix cron uses 5 fields: minute, hour, day of month, month, and day of week. Some systems (like Quartz scheduler, Spring, and AWS) add a 6th field for seconds at the beginning, making it: second, minute, hour, day of month, month, day of week. Some also support a 7th field for year. This tool supports the standard 5-field format, which is the most widely used in crontab, CI/CD tools, and cloud schedulers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I schedule a cron job to run every 5 minutes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To run a cron job every 5 minutes, use the expression '*/5 * * * *'. The */5 in the minute field means 'every 5th minute' (0, 5, 10, 15, ..., 55). The remaining asterisks mean 'every hour, every day, every month, every day of the week'."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks"></ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1 class="hero__title">Cron Expression Generator &amp; Parser</h1>
+      <p class="hero__subtitle">Parse cron expressions into plain English, build schedules visually, and preview next execution times &mdash; entirely in your browser</p>
+    </section>
+
+    <!-- MODE TABS -->
+    <div class="command-bar" role="toolbar" aria-label="Cron mode selection">
+      <div class="command-bar__group">
+        <div class="cron-tab" role="group" aria-label="Mode">
+          <button class="cron-tab__btn" aria-pressed="true" data-mode="parse">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l4-4-4-4"/><path d="M8 12h6"/></svg>
+            Parse
+          </button>
+          <button class="cron-tab__btn" aria-pressed="false" data-mode="build">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M8 5v6M5 8h6"/></svg>
+            Build
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PARSE SECTION ==================== -->
+    <section id="parseSection">
+      <!-- Cron Input -->
+      <div class="cron-input">
+        <label for="cronInput" class="cron-input__label">Cron Expression</label>
+        <input type="text" id="cronInput" class="cron-input__field" placeholder="* * * * *" spellcheck="false" autocomplete="off" aria-label="Cron expression input">
+        <div class="cron-input__actions">
+          <button class="btn btn--subtle btn--sm" id="btnCopy">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+            Copy
+          </button>
+          <button class="btn btn--subtle btn--sm" id="btnClear">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="cron-error" id="parseError" style="display:none" role="alert"></div>
+
+      <!-- Parse Results -->
+      <div id="parseResult" style="display:none">
+        <!-- Human-readable description -->
+        <div class="cron-desc">
+          <div class="cron-desc__head">
+            <div class="cron-desc__head-left">
+              <span class="cron-desc__dot"></span>
+              <span class="cron-desc__title">Schedule Description</span>
+            </div>
+          </div>
+          <div class="cron-desc__body">
+            <div class="cron-desc__text" id="descText"></div>
+          </div>
+        </div>
+
+        <!-- Field breakdown -->
+        <div class="cron-fields" id="fieldsGrid"></div>
+
+        <!-- Next executions -->
+        <div class="cron-next">
+          <div class="cron-next__head">
+            <div class="cron-next__head-left">
+              <span class="cron-next__dot"></span>
+              <span class="cron-next__title">Next 10 Executions</span>
+            </div>
+          </div>
+          <ul class="cron-next__list" id="nextList"></ul>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <section class="section">
+        <h2 class="section__title">Common Cron Presets</h2>
+        <p style="color: var(--color-ink-muted); margin-bottom: var(--space-4);">Click any preset to load it into the parser and see its description and upcoming execution times.</p>
+        <div class="cron-presets" id="presetsGrid"></div>
+      </section>
+    </section>
+
+    <!-- ==================== BUILD SECTION ==================== -->
+    <section id="buildSection" style="display:none">
+      <!-- Builder -->
+      <div class="cron-builder">
+        <div class="cron-builder__head">
+          <span class="cron-builder__dot"></span>
+          <span class="cron-builder__title">Schedule Builder</span>
+        </div>
+        <div class="cron-builder__body">
+          <div class="cron-builder-grid" id="builderBody"></div>
+        </div>
+      </div>
+
+      <!-- Generated expression -->
+      <div class="cron-output">
+        <div class="cron-output__label">Generated Expression</div>
+        <div class="cron-output__expr" id="buildOutput">* * * * *</div>
+        <div class="cron-output__desc" id="buildDesc"></div>
+        <div class="cron-output__actions">
+          <button class="btn btn--default" id="btnBuildCopy">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+            Copy
+          </button>
+          <button class="btn btn--subtle" id="btnBuildParse">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l4-4-4-4"/><path d="M8 12h6"/></svg>
+            Parse This Expression
+          </button>
+        </div>
+      </div>
+
+      <!-- Build next executions -->
+      <div class="cron-next">
+        <div class="cron-next__head">
+          <div class="cron-next__head-left">
+            <span class="cron-next__dot"></span>
+            <span class="cron-next__title">Next 5 Executions</span>
+          </div>
+        </div>
+        <ul class="cron-next__list" id="buildNextList"></ul>
+      </div>
+    </section>
+
+    <!-- ==================== EDUCATIONAL CONTENT ==================== -->
+
+    <!-- What is Cron -->
+    <section class="section">
+      <h2 class="section__title">What is a Cron Expression?</h2>
+      <div class="content">
+        <p>A cron expression is a compact string that defines a recurring schedule. Originally created for the Unix <code>cron</code> daemon in the 1970s, cron expressions have become the universal language for scheduling automated tasks across operating systems, cloud platforms, CI/CD pipelines, and application frameworks.</p>
+        <p>A standard cron expression consists of five fields separated by spaces, each representing a unit of time. Together, these fields specify exactly when a task should execute — from "every minute" to "at 3:30 PM on the last Friday of March." The syntax is concise enough to fit in a configuration line, yet expressive enough to describe nearly any recurring schedule.</p>
+        <p>Cron expressions are used in a wide variety of systems: Unix/Linux crontab, Kubernetes CronJobs, AWS CloudWatch Events, Google Cloud Scheduler, Azure Functions Timer Triggers, GitHub Actions, Jenkins, Airflow, Spring Boot, and many more. Understanding cron syntax is an essential skill for DevOps engineers, backend developers, and system administrators.</p>
+      </div>
+    </section>
+
+    <!-- Cron Syntax -->
+    <section class="section">
+      <h2 class="section__title">Cron Expression Syntax</h2>
+      <div class="content">
+        <p>A standard 5-field cron expression follows this format:</p>
+      </div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Allowed Values</th>
+            <th>Special Characters</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Minute</code></td>
+            <td>0–59</td>
+            <td><code>* , - /</code></td>
+            <td>The minute within the hour when the task runs</td>
+          </tr>
+          <tr>
+            <td><code>Hour</code></td>
+            <td>0–23</td>
+            <td><code>* , - /</code></td>
+            <td>The hour of the day (24-hour format, 0 = midnight)</td>
+          </tr>
+          <tr>
+            <td><code>Day of Month</code></td>
+            <td>1–31</td>
+            <td><code>* , - /</code></td>
+            <td>The day of the month (1 = first day)</td>
+          </tr>
+          <tr>
+            <td><code>Month</code></td>
+            <td>1–12</td>
+            <td><code>* , - /</code></td>
+            <td>The month of the year (1 = January, 12 = December)</td>
+          </tr>
+          <tr>
+            <td><code>Day of Week</code></td>
+            <td>0–6</td>
+            <td><code>* , - /</code></td>
+            <td>The day of the week (0 = Sunday, 6 = Saturday)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Special Characters -->
+    <section class="section">
+      <h2 class="section__title">Special Characters Explained</h2>
+      <div class="card-grid">
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3v14"/><path d="M3.5 6.5l13 7"/><path d="M3.5 13.5l13-7"/></svg>
+          </div>
+          <h3 class="info-card__title">Asterisk <code>*</code></h3>
+          <p class="info-card__text">Matches every possible value in the field. <code>*</code> in the hour field means "every hour" (0 through 23). It's the wildcard — when you don't need to restrict a field, use <code>*</code>.</p>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4L6 16"/></svg>
+          </div>
+          <h3 class="info-card__title">Slash <code>/</code></h3>
+          <p class="info-card__text">Defines step intervals. <code>*/15</code> in the minute field means "every 15 minutes" (0, 15, 30, 45). <code>2/3</code> means "every 3rd value starting from 2" (2, 5, 8, 11, ...).</p>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none"><text x="10" y="15" text-anchor="middle" font-family="Cascadia Code,Consolas,monospace" font-size="18" font-weight="700" fill="currentColor">,</text></svg>
+          </div>
+          <h3 class="info-card__title">Comma <code>,</code></h3>
+          <p class="info-card__text">Separates individual values in a list. <code>1,15</code> in the day-of-month field means "on the 1st and 15th of the month." You can combine any number of values: <code>0,15,30,45</code>.</p>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 10h12"/></svg>
+          </div>
+          <h3 class="info-card__title">Hyphen <code>-</code></h3>
+          <p class="info-card__text">Defines an inclusive range. <code>1-5</code> in the day-of-week field means "Monday through Friday." <code>9-17</code> in the hour field means "from 9 AM to 5 PM" (inclusive).</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Common Examples -->
+    <section class="section">
+      <h2 class="section__title">Common Cron Expression Examples</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Expression</th>
+            <th>Description</th>
+            <th>Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>* * * * *</code></td>
+            <td>Every minute</td>
+            <td>Health checks, queue processing</td>
+          </tr>
+          <tr>
+            <td><code>*/5 * * * *</code></td>
+            <td>Every 5 minutes</td>
+            <td>Metrics collection, cache refresh</td>
+          </tr>
+          <tr>
+            <td><code>0 * * * *</code></td>
+            <td>Every hour at minute 0</td>
+            <td>Hourly reports, data sync</td>
+          </tr>
+          <tr>
+            <td><code>0 0 * * *</code></td>
+            <td>Every day at midnight</td>
+            <td>Daily backups, log rotation</td>
+          </tr>
+          <tr>
+            <td><code>0 9 * * 1-5</code></td>
+            <td>Weekdays at 9:00 AM</td>
+            <td>Business-hours alerts, team notifications</td>
+          </tr>
+          <tr>
+            <td><code>30 2 * * *</code></td>
+            <td>Every day at 2:30 AM</td>
+            <td>Maintenance windows, overnight batch jobs</td>
+          </tr>
+          <tr>
+            <td><code>0 0 1 * *</code></td>
+            <td>First day of every month at midnight</td>
+            <td>Monthly billing, report generation</td>
+          </tr>
+          <tr>
+            <td><code>0 0 * * 0</code></td>
+            <td>Every Sunday at midnight</td>
+            <td>Weekly cleanup, digest emails</td>
+          </tr>
+          <tr>
+            <td><code>0 6,18 * * *</code></td>
+            <td>Every day at 6:00 AM and 6:00 PM</td>
+            <td>Twice-daily sync, morning/evening jobs</td>
+          </tr>
+          <tr>
+            <td><code>0 0 1 1 *</code></td>
+            <td>January 1st at midnight</td>
+            <td>Annual reset, yearly reports</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Where Cron Is Used -->
+    <section class="section">
+      <h2 class="section__title">Where Are Cron Expressions Used?</h2>
+      <div class="content">
+        <p>Cron expressions are the scheduling standard across the software industry. Here are the most common systems that use cron syntax:</p>
+        <ul>
+          <li><strong>Unix/Linux Crontab</strong> — The original cron daemon. Edit your schedule with <code>crontab -e</code> and define jobs that run at specified times. This is the most common way to schedule recurring tasks on a Linux server.</li>
+          <li><strong>Kubernetes CronJobs</strong> — Kubernetes uses standard 5-field cron expressions to schedule containerized workloads. Ideal for periodic batch processing, database cleanup, and report generation in cloud-native environments.</li>
+          <li><strong>AWS CloudWatch Events / EventBridge</strong> — Amazon Web Services uses cron expressions (with a 6-field variant that includes year) to trigger Lambda functions, Step Functions, and other AWS services on a schedule.</li>
+          <li><strong>Google Cloud Scheduler</strong> — Google's managed cron service accepts standard cron expressions to trigger HTTP endpoints, Pub/Sub topics, and App Engine handlers.</li>
+          <li><strong>Azure Functions Timer Trigger</strong> — Microsoft Azure uses 6-field cron expressions (with seconds) to trigger serverless functions on a recurring schedule via the NCrontab format.</li>
+          <li><strong>GitHub Actions</strong> — The <code>schedule</code> trigger in GitHub Actions workflows uses standard 5-field cron expressions to run CI/CD pipelines, automated tests, and maintenance tasks on a schedule.</li>
+          <li><strong>Jenkins</strong> — Jenkins pipeline and freestyle jobs support cron-like expressions for build triggers, with the optional <code>H</code> symbol for hash-based load distribution.</li>
+          <li><strong>Spring Boot / Quartz Scheduler</strong> — Java applications commonly use 6-field cron expressions (with seconds) through Spring's <code>@Scheduled</code> annotation or the Quartz scheduling library.</li>
+          <li><strong>Apache Airflow</strong> — Data pipeline orchestration tool that uses cron expressions to define DAG (Directed Acyclic Graph) execution schedules.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Features of This Tool -->
+    <section class="section">
+      <h2 class="section__title">Features of This Cron Tool</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Instant parsing</strong> — Enter any 5-field cron expression and see a plain-English description in real time. Each field is broken down individually with its meaning explained, so you can understand complex expressions at a glance.</li>
+          <li><strong>Next execution preview</strong> — See the next 10 upcoming execution times for any cron expression, calculated from the current date and time. Each timestamp includes a relative time indicator ("in 5 minutes", "in 2 days") for quick reference.</li>
+          <li><strong>Visual schedule builder</strong> — Build cron expressions visually without memorizing the syntax. Choose between "Every", "Specific values", "Range", or "Step" for each field using clickable buttons and inputs. The generated expression updates in real time.</li>
+          <li><strong>Common presets</strong> — Start with one of 16 common cron schedules (every 5 minutes, daily at midnight, weekdays at 9 AM, etc.) and customize from there. One click loads the expression into the parser.</li>
+          <li><strong>Field breakdown</strong> — Each of the 5 fields is displayed in a dedicated card showing the raw value and its human-readable meaning. Months and days of the week are shown by name for clarity.</li>
+          <li><strong>Copy and transfer</strong> — Copy any generated or parsed expression to clipboard with one click. Switch seamlessly between Parse and Build modes — expressions transfer between the two views.</li>
+          <li><strong>100% client-side</strong> — All parsing, building, and execution time calculation happens entirely in your browser. No data is ever sent to any server. The tool works offline after the initial page load.</li>
+          <li><strong>No dependencies</strong> — Built with vanilla HTML, CSS, and JavaScript. No frameworks, no build tools, no third-party libraries. Loads in milliseconds.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2 class="section__title">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What is a cron expression?</h3>
+        <p class="faq-answer">A cron expression is a string of five fields separated by spaces that defines a schedule for recurring tasks. The five fields represent minute (0-59), hour (0-23), day of month (1-31), month (1-12), and day of week (0-6, where 0 is Sunday). Cron expressions are used in Unix/Linux cron jobs, CI/CD pipelines, task schedulers, and cloud services like AWS CloudWatch, Google Cloud Scheduler, and Azure Functions.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">How do I read a cron expression?</h3>
+        <p class="faq-answer">Read a cron expression from left to right: minute, hour, day of month, month, day of week. An asterisk (*) means "every value." For example, <code>30 9 * * 1-5</code> means "at minute 30, hour 9, every day of month, every month, Monday through Friday" — or simply "at 9:30 AM on weekdays." Use a slash (/) for step values, a comma (,) for lists, and a hyphen (-) for ranges.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What do the special characters in cron mean?</h3>
+        <p class="faq-answer">Cron expressions use four special characters: asterisk (*) matches every possible value; slash (/) defines step intervals (e.g., */15 means every 15); comma (,) separates individual values in a list; hyphen (-) defines an inclusive range (e.g., 1-5 means 1 through 5). These can be combined: <code>0-30/10</code> means "every 10 minutes from minute 0 through 30" (0, 10, 20, 30).</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is it safe to use this cron tool?</h3>
+        <p class="faq-answer">Yes. This tool processes everything entirely in your browser using JavaScript. No data is transmitted to any server. The cron expressions you enter and the schedules you build are parsed and calculated locally. You can verify this by checking the browser's network tab — no requests are made when you parse or build an expression. The tool works offline after the initial page load.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What is the difference between 5-field and 6-field cron?</h3>
+        <p class="faq-answer">Standard Unix cron uses 5 fields: minute, hour, day of month, month, and day of week. Some systems (like Quartz Scheduler, Spring Boot, and AWS EventBridge) add a 6th field for seconds at the beginning, or a year field at the end. This tool supports the standard 5-field format, which is the most widely used across crontab, Kubernetes, GitHub Actions, Google Cloud Scheduler, and most CI/CD tools.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">How do I schedule a cron job to run every 5 minutes?</h3>
+        <p class="faq-answer">Use the expression <code>*/5 * * * *</code>. The <code>*/5</code> in the minute field means "every 5th minute" (0, 5, 10, 15, ..., 55). The remaining asterisks mean "every hour, every day, every month, every day of the week." This is one of the most common cron schedules for health checks, metrics collection, and cache refresh operations.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">How are next execution times calculated?</h3>
+        <p class="faq-answer">Next execution times are calculated by iterating forward from the current date and time, checking each minute against the cron expression's constraints. The calculation happens entirely in your browser using JavaScript's Date object in your local timezone. Times are shown with both absolute timestamps and relative indicators for quick reference.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">Tools</div>
+        <ul class="footer__links">
+          <li><a href="/json-prettier/" class="footer__link">JSON Formatter</a></li>
+          <li><a href="/uuid-generator/" class="footer__link">UUID Generator</a></li>
+          <li><a href="/jwt-decoder/" class="footer__link">JWT Decoder</a></li>
+          <li><a href="/cron-expression/" class="footer__link">Cron Expression</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Resources</div>
+        <ul class="footer__links">
+          <li><a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html" class="footer__link" target="_blank" rel="noopener">POSIX crontab</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/" class="footer__link" target="_blank" rel="noopener">K8s CronJobs</a></li>
+          <li><a href="https://man7.org/linux/man-pages/man5/crontab.5.html" class="footer__link" target="_blank" rel="noopener">crontab(5) man page</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2025 DevTools. All parsing and calculation happens in your browser. Your expressions never leave your device.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/cron-expression/js/app.js"></script>
+</body>
+</html>
