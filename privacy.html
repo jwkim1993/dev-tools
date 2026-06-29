@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — DevTools</title>
-  <meta name="description" content="Privacy policy for DevTools. All JSON formatting, UUID generation, and other processing happens in your browser — your data is never sent to any server.">
+  <meta name="description" content="Privacy policy for DevTools. All JSON formatting, UUID generation, JWT decoding, and other processing happens in your browser — your data is never sent to any server.">
   <link rel="canonical" href="https://devtools.pages.dev/privacy.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Privacy Policy — DevTools">
@@ -22,12 +22,7 @@
       DevTools
     </a>
     <nav>
-      <ul class="nav__links" id="navLinks">
-        <li><a href="/" class="nav__link">Tools</a></li>
-        <li><a href="/json-prettier/" class="nav__link">JSON Formatter</a></li>
-        <li><a href="/uuid-generator/" class="nav__link">UUID Generator</a></li>
-        <li><a href="/about.html" class="nav__link">About</a></li>
-      </ul>
+      <ul class="nav__links" id="navLinks"></ul>
     </nav>
     <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
@@ -45,17 +40,18 @@
 
     <article class="content">
       <h2>Introduction</h2>
-      <p>DevTools ("we," "our," or "the service") is a collection of free online developer tools including a JSON formatter and UUID generator. We are committed to protecting your privacy. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data.</p>
+      <p>DevTools ("we," "our," or "the service") is a collection of free online developer tools including a JSON formatter, UUID generator, and JWT decoder. We are committed to protecting your privacy. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data.</p>
       <p>The most important thing to know: <strong>all data processing happens entirely in your browser</strong>. Your JSON data, generated UUIDs, and all tool inputs are never transmitted to our servers or any third party. There is no backend server that receives or stores your input.</p>
 
       <h2>Information We Do Not Collect</h2>
       <p>We want to be clear about what we do <strong>not</strong> collect:</p>
       <ul>
-        <li><strong>Tool input data</strong> — Any JSON you paste, upload, or load, and any UUIDs you generate, are processed entirely within your browser using JavaScript. Nothing is sent to any server.</li>
-        <li><strong>Tool preferences</strong> — Indentation settings, UUID format options, sort key preferences, and other tool options are handled in your browser's memory and are not tracked or stored remotely.</li>
+        <li><strong>Tool input data</strong> — Any JSON you paste, upload, or load, UUIDs you generate, and JWT tokens you decode or create are processed entirely within your browser using JavaScript. Nothing is sent to any server.</li>
+        <li><strong>Tool preferences</strong> — Indentation settings, UUID format options, JWT algorithm selections, and other tool options are handled in your browser's memory and are not tracked or stored remotely.</li>
         <li><strong>User accounts</strong> — We do not require or offer user accounts. There is no registration, login, or profile system.</li>
         <li><strong>Personal information</strong> — We do not collect names, email addresses, phone numbers, or any other personal identifiers.</li>
         <li><strong>Bulk generation data</strong> — UUIDs you download or copy in bulk never reach our servers.</li>
+        <li><strong>JWT tokens and secrets</strong> — Tokens you decode and secret keys you enter for signature verification are processed entirely in your browser. They are never transmitted or logged.</li>
       </ul>
 
       <h2>Information Collected Automatically</h2>
@@ -122,6 +118,7 @@
         <ul class="footer__links">
           <li><a href="/json-prettier/" class="footer__link">JSON Formatter</a></li>
           <li><a href="/uuid-generator/" class="footer__link">UUID Generator</a></li>
+          <li><a href="/jwt-decoder/" class="footer__link">JWT Decoder</a></li>
         </ul>
       </div>
       <div class="footer__col">

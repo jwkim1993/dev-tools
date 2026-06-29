@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT Decoder &amp; Encoder — Decode, Verify, and Generate JSON Web Tokens Online Free</title>
+  <meta name="description" content="Free online JWT decoder and encoder. Decode, inspect, verify, and generate JSON Web Tokens instantly in your browser. Supports HS256, HS384, HS512. No data sent to any server.">
+  <meta name="keywords" content="JWT decoder, JWT encoder, JSON Web Token, JWT parser, JWT generator, JWT debugger, HS256, token decoder, JWT verify, JWT online, free JWT tool">
+  <link rel="canonical" href="https://devtools.pages.dev/jwt-decoder/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="JWT Decoder & Encoder — Decode and Generate JSON Web Tokens Online">
+  <meta property="og:description" content="Free online JWT tool. Decode, inspect claims, verify signatures, and generate tokens. All processing in your browser.">
+  <meta property="og:url" content="https://devtools.pages.dev/jwt-decoder/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JWT Decoder & Encoder — Free Online JSON Web Token Tool">
+  <meta name="twitter:description" content="Decode, verify, and generate JWTs in your browser. Free, private, no sign-up.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='Segoe UI,sans-serif' font-weight='700' font-size='11' fill='white'%3EJWT%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/jwt-decoder/css/jwt-decoder.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JWT Decoder & Encoder",
+    "url": "https://devtools.pages.dev/jwt-decoder/",
+    "description": "Free online tool to decode, inspect, verify, and generate JSON Web Tokens (JWT). Supports HMAC algorithms (HS256, HS384, HS512). All processing happens client-side in your browser.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a JSON Web Token (JWT)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A JSON Web Token (JWT) is a compact, URL-safe token format defined by RFC 7519. It consists of three Base64URL-encoded parts separated by dots: a header (metadata and algorithm), a payload (claims about a user or entity), and a signature (cryptographic proof of integrity). JWTs are widely used for authentication and authorization in web applications and APIs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it safe to paste my JWT into this tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. This tool processes everything entirely in your browser using JavaScript. Your token is never transmitted to any server. You can verify this by checking the browser's network tab — no requests are made when you decode or generate a token. The tool works offline after the initial page load."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What JWT algorithms does this tool support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This tool can decode JWTs signed with any algorithm, since decoding only requires Base64URL parsing. For signature verification and token generation, HMAC-based algorithms are supported: HS256 (HMAC-SHA256), HS384 (HMAC-SHA384), and HS512 (HMAC-SHA512). RSA and ECDSA verification require private/public key pairs which are not currently supported in this browser-based tool."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I decode a JWT without the secret key?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. JWT headers and payloads are Base64URL-encoded, not encrypted. You can always decode and read the contents of any JWT without the secret key. The secret key is only needed to verify the signature (confirming the token hasn't been tampered with) or to generate new tokens."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks"></ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1 class="hero__title">JWT Decoder &amp; Encoder</h1>
+      <p class="hero__subtitle">Decode, inspect, verify, and generate JSON Web Tokens &mdash; entirely in your browser</p>
+    </section>
+
+    <!-- MODE TABS -->
+    <div class="command-bar" role="toolbar" aria-label="JWT mode selection">
+      <div class="command-bar__group">
+        <div class="jwt-tab" role="group" aria-label="Mode">
+          <button class="jwt-tab__btn" aria-pressed="true" data-mode="decode">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l4-4-4-4"/><path d="M8 12h6"/></svg>
+            Decode
+          </button>
+          <button class="jwt-tab__btn" aria-pressed="false" data-mode="encode">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l-4 4 4 4"/><path d="M2 4h6"/></svg>
+            Encode
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== DECODE SECTION ==================== -->
+    <section id="decodeSection">
+      <!-- Token Input -->
+      <div class="jwt-input">
+        <label for="tokenInput" class="jwt-input__label">Encoded Token</label>
+        <textarea id="tokenInput" class="jwt-input__textarea" placeholder="Paste your JWT here (e.g. eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOi...)&#10;&#10;Bearer prefix is automatically stripped." spellcheck="false" aria-label="JWT token input"></textarea>
+        <div class="jwt-input__actions">
+          <button class="btn btn--subtle btn--sm" id="btnPaste">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H6a1 1 0 00-1 1v1H4a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V5a1 1 0 00-1-1h-1V3a1 1 0 00-1-1z"/><path d="M6 2h4v2H6z"/></svg>
+            Paste
+          </button>
+          <button class="btn btn--subtle btn--sm" id="btnSample">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M2 8h8M2 12h10"/></svg>
+            Sample
+          </button>
+          <button class="btn btn--subtle btn--sm" id="btnClearDecode">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="jwt-error" id="decodeError" style="display:none" role="alert"></div>
+
+      <!-- Segment Visualizer -->
+      <div class="jwt-segments" id="jwtSegments" style="display:none" role="img" aria-label="JWT segment breakdown">
+        <div class="jwt-seg jwt-seg--header">
+          <div class="jwt-seg__label">Header <span class="jwt-seg__algo" id="segAlgo"></span></div>
+          <div class="jwt-seg__text" id="segHeaderText"></div>
+        </div>
+        <div class="jwt-seg__dot" aria-hidden="true"></div>
+        <div class="jwt-seg jwt-seg--payload">
+          <div class="jwt-seg__label">Payload</div>
+          <div class="jwt-seg__text" id="segPayloadText"></div>
+        </div>
+        <div class="jwt-seg__dot" aria-hidden="true"></div>
+        <div class="jwt-seg jwt-seg--signature">
+          <div class="jwt-seg__label">Signature</div>
+          <div class="jwt-seg__text" id="segSignatureText"></div>
+        </div>
+      </div>
+
+      <!-- Decoded Output -->
+      <div id="jwtDecoded" style="display:none">
+        <div class="jwt-decoded__grid">
+          <!-- Header Card -->
+          <div class="jwt-card">
+            <div class="jwt-card__head">
+              <div class="jwt-card__head-left">
+                <span class="jwt-card__dot jwt-card__dot--header"></span>
+                <span class="jwt-card__title">Header</span>
+              </div>
+              <button class="btn btn--subtle btn--sm btn--icon" id="btnCopyHeader" title="Copy header JSON" aria-label="Copy header JSON">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+              </button>
+            </div>
+            <pre class="jwt-card__code" id="headerOutput"></pre>
+          </div>
+
+          <!-- Payload Card -->
+          <div class="jwt-card">
+            <div class="jwt-card__head">
+              <div class="jwt-card__head-left">
+                <span class="jwt-card__dot jwt-card__dot--payload"></span>
+                <span class="jwt-card__title">Payload</span>
+                <span class="jwt-badge" id="expiryBadge" style="display:none"></span>
+              </div>
+              <button class="btn btn--subtle btn--sm btn--icon" id="btnCopyPayload" title="Copy payload JSON" aria-label="Copy payload JSON">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+              </button>
+            </div>
+            <pre class="jwt-card__code" id="payloadOutput"></pre>
+          </div>
+        </div>
+
+        <!-- Claims Inspector -->
+        <div class="jwt-card" style="margin-bottom: var(--space-4)">
+          <div class="jwt-card__head">
+            <div class="jwt-card__head-left">
+              <span class="jwt-card__dot jwt-card__dot--payload"></span>
+              <span class="jwt-card__title">Claims Inspector</span>
+            </div>
+          </div>
+          <div id="claimsTable"></div>
+        </div>
+
+        <!-- Signature Verification -->
+        <div class="jwt-verify">
+          <div class="jwt-card__head">
+            <div class="jwt-card__head-left">
+              <span class="jwt-card__dot jwt-card__dot--signature"></span>
+              <span class="jwt-card__title">Signature Verification</span>
+            </div>
+          </div>
+          <div class="jwt-verify__body">
+            <div class="jwt-verify__row">
+              <input type="text" class="jwt-verify__input" id="verifySecret" placeholder="Enter HMAC secret key to verify signature" spellcheck="false" aria-label="Secret key for signature verification">
+              <button class="btn btn--primary" id="btnVerify">Verify</button>
+            </div>
+            <div class="jwt-verify__status" id="verifyStatus" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ENCODE SECTION ==================== -->
+    <section id="encodeSection" style="display:none">
+      <div class="jwt-encode__grid">
+        <!-- Header Editor -->
+        <div class="jwt-card">
+          <div class="jwt-card__head">
+            <div class="jwt-card__head-left">
+              <span class="jwt-card__dot jwt-card__dot--header"></span>
+              <span class="jwt-card__title">Header</span>
+            </div>
+            <div>
+              <label class="command-bar__label" for="algoSelect">Algorithm</label>
+              <select class="select" id="algoSelect" aria-label="Signing algorithm">
+                <option value="HS256" selected>HS256</option>
+                <option value="HS384">HS384</option>
+                <option value="HS512">HS512</option>
+              </select>
+            </div>
+          </div>
+          <div class="jwt-card__body">
+            <textarea id="encodeHeader" class="jwt-encode__editor" spellcheck="false" aria-label="JWT header JSON"></textarea>
+          </div>
+        </div>
+
+        <!-- Payload Editor -->
+        <div class="jwt-card">
+          <div class="jwt-card__head">
+            <div class="jwt-card__head-left">
+              <span class="jwt-card__dot jwt-card__dot--payload"></span>
+              <span class="jwt-card__title">Payload</span>
+            </div>
+            <div class="jwt-encode__claim-btns">
+              <button class="btn btn--subtle btn--sm" id="btnAddSub">+sub</button>
+              <button class="btn btn--subtle btn--sm" id="btnAddIat">+iat</button>
+              <button class="btn btn--subtle btn--sm" id="btnAddExp">+exp</button>
+            </div>
+          </div>
+          <div class="jwt-card__body">
+            <textarea id="encodePayload" class="jwt-encode__editor" spellcheck="false" aria-label="JWT payload JSON"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secret Key -->
+      <div class="jwt-encode__secret">
+        <div class="jwt-input__label">Secret Key</div>
+        <div class="jwt-encode__secret-row">
+          <input type="text" class="jwt-verify__input" id="encodeSecret" value="your-256-bit-secret" spellcheck="false" aria-label="HMAC secret key for signing">
+          <button class="btn btn--primary" id="btnGenerate">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 3l4 5-4 5"/></svg>
+            Generate Token
+          </button>
+        </div>
+      </div>
+
+      <!-- Generated Output -->
+      <div class="jwt-encode__output" id="encodeOutput" style="display:none">
+        <div class="jwt-input__label">Generated Token</div>
+        <textarea id="generatedToken" class="jwt-encode__output-textarea" readonly aria-label="Generated JWT"></textarea>
+        <div class="jwt-encode__output-actions">
+          <button class="btn btn--default" id="btnCopyGenerated">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+            Copy
+          </button>
+          <button class="btn btn--subtle" id="btnDecodeGenerated">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l4-4-4-4"/><path d="M8 12h6"/></svg>
+            Decode This Token
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== EDUCATIONAL CONTENT ==================== -->
+
+    <!-- What is JWT -->
+    <section class="section">
+      <h2 class="section__title">What is a JSON Web Token (JWT)?</h2>
+      <div class="content">
+        <p>A JSON Web Token (JWT, pronounced "jot") is a compact, URL-safe token format defined by <a href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank" rel="noopener">RFC 7519</a>. JWTs provide a standardized way to securely transmit information between parties as a JSON object. The information is digitally signed, so it can be verified and trusted by the recipient.</p>
+        <p>JWTs are the backbone of modern authentication and authorization systems. When you log into a web application, the server typically issues a JWT that your browser stores and sends with each subsequent request. The server can verify the token's signature without querying a database, making JWTs ideal for stateless, scalable architectures.</p>
+        <p>Unlike session cookies that require server-side storage, JWTs are self-contained — they carry all the necessary information within the token itself. This makes them popular for single sign-on (SSO), API authentication, microservice communication, and mobile app backends.</p>
+      </div>
+    </section>
+
+    <!-- JWT Structure -->
+    <section class="section">
+      <h2 class="section__title">JWT Structure</h2>
+      <div class="content">
+        <p>Every JWT consists of three parts separated by dots (<code>.</code>): the header, the payload, and the signature. Each part is Base64URL-encoded, making the token URL-safe and compact enough to include in HTTP headers, query parameters, or POST bodies.</p>
+      </div>
+      <div class="jwt-structure" role="img" aria-label="JWT structure diagram showing header, payload, and signature">
+        <div class="jwt-struct-part">
+          <div class="jwt-struct-part__block jwt-struct-part__block--header">eyJhbGciOi...}</div>
+          <div class="jwt-struct-part__label">Header<br>(algorithm &amp; type)</div>
+        </div>
+        <div class="jwt-struct-dot" aria-hidden="true">.</div>
+        <div class="jwt-struct-part">
+          <div class="jwt-struct-part__block jwt-struct-part__block--payload">eyJzdWIiOi...}</div>
+          <div class="jwt-struct-part__label">Payload<br>(claims / data)</div>
+        </div>
+        <div class="jwt-struct-dot" aria-hidden="true">.</div>
+        <div class="jwt-struct-part">
+          <div class="jwt-struct-part__block jwt-struct-part__block--sig">SflKxwRJ...</div>
+          <div class="jwt-struct-part__label">Signature<br>(verification)</div>
+        </div>
+      </div>
+      <div class="content">
+        <h3>Header</h3>
+        <p>The header typically contains two fields: <code>alg</code> (the signing algorithm, such as HS256 or RS256) and <code>typ</code> (the token type, always "JWT"). The header is Base64URL-encoded to form the first segment of the token.</p>
+
+        <h3>Payload</h3>
+        <p>The payload contains the claims — statements about the user and additional metadata. Claims can be registered (standardized names like <code>sub</code>, <code>exp</code>, <code>iat</code>), public (custom names that should be collision-resistant), or private (agreed upon between parties). The payload is Base64URL-encoded but <strong>not encrypted</strong> — anyone with the token can read its contents.</p>
+
+        <h3>Signature</h3>
+        <p>The signature is created by taking the encoded header, the encoded payload, a secret key (for HMAC) or a private key (for RSA/ECDSA), and signing them with the algorithm specified in the header. The signature ensures that the token hasn't been tampered with. If any part of the header or payload changes, the signature will no longer match.</p>
+      </div>
+    </section>
+
+    <!-- Standard Claims -->
+    <section class="section">
+      <h2 class="section__title">Standard JWT Claims (Registered Claims)</h2>
+      <div class="content">
+        <p>RFC 7519 defines a set of registered claim names that provide a common vocabulary for token metadata. While none are mandatory, using these standardized names ensures interoperability between different systems and libraries.</p>
+      </div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Claim</th>
+            <th>Full Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>iss</code></td>
+            <td>Issuer</td>
+            <td>Identifies the entity that issued the JWT (e.g., your auth server URL)</td>
+          </tr>
+          <tr>
+            <td><code>sub</code></td>
+            <td>Subject</td>
+            <td>Identifies the subject of the JWT (typically the user ID)</td>
+          </tr>
+          <tr>
+            <td><code>aud</code></td>
+            <td>Audience</td>
+            <td>Identifies the recipients the JWT is intended for (e.g., API endpoint)</td>
+          </tr>
+          <tr>
+            <td><code>exp</code></td>
+            <td>Expiration Time</td>
+            <td>Unix timestamp after which the JWT must not be accepted</td>
+          </tr>
+          <tr>
+            <td><code>nbf</code></td>
+            <td>Not Before</td>
+            <td>Unix timestamp before which the JWT must not be accepted</td>
+          </tr>
+          <tr>
+            <td><code>iat</code></td>
+            <td>Issued At</td>
+            <td>Unix timestamp when the JWT was created</td>
+          </tr>
+          <tr>
+            <td><code>jti</code></td>
+            <td>JWT ID</td>
+            <td>Unique identifier for the JWT, used to prevent token replay</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Algorithms -->
+    <section class="section">
+      <h2 class="section__title">JWT Signing Algorithms</h2>
+      <div class="card-grid">
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="8" width="14" height="9" rx="2"/><path d="M6 8V5a4 4 0 018 0v3"/></svg>
+          </div>
+          <h3 class="info-card__title">HMAC <span class="badge badge--primary">Symmetric</span></h3>
+          <p class="info-card__text">HS256, HS384, HS512 use a shared secret key for both signing and verification. Fast and simple — ideal when the same server issues and verifies tokens. The secret must be kept private on all parties that need to verify the token.</p>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 3v14M15 3v14"/><path d="M5 7h10M5 13h10"/></svg>
+          </div>
+          <h3 class="info-card__title">RSA <span class="badge badge--success">Asymmetric</span></h3>
+          <p class="info-card__text">RS256, RS384, RS512 use a private key for signing and a public key for verification. Ideal for distributed systems where multiple services need to verify tokens without accessing the signing key.</p>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><ellipse cx="10" cy="10" rx="3" ry="7"/><path d="M3 10h14"/></svg>
+          </div>
+          <h3 class="info-card__title">ECDSA <span class="badge badge--success">Asymmetric</span></h3>
+          <p class="info-card__text">ES256, ES384, ES512 use elliptic curve cryptography for shorter keys and signatures compared to RSA, while providing equivalent security. Increasingly popular in mobile and IoT applications where bandwidth matters.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Security Best Practices -->
+    <section class="section">
+      <h2 class="section__title">JWT Security Best Practices</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Never store sensitive data in the payload</strong> — JWTs are encoded, not encrypted. Anyone with the token can read the payload. Avoid including passwords, credit card numbers, or other sensitive information.</li>
+          <li><strong>Always verify the signature</strong> — Before trusting any claim in a JWT, verify the signature using the appropriate key. Never use a JWT's claims without verification in a production system.</li>
+          <li><strong>Set short expiration times</strong> — Use the <code>exp</code> claim to limit token lifetime. Short-lived tokens (15 minutes to 1 hour) reduce the window of opportunity if a token is compromised. Use refresh tokens for longer sessions.</li>
+          <li><strong>Use strong secrets</strong> — For HMAC algorithms, use a secret key with at least 256 bits of entropy. Never use simple strings like "secret" or "password" in production.</li>
+          <li><strong>Validate the algorithm</strong> — Always validate the <code>alg</code> claim on the server side. Do not let the token dictate which algorithm to use for verification — this prevents algorithm-switching attacks.</li>
+          <li><strong>Use HTTPS</strong> — Always transmit JWTs over HTTPS to prevent token interception. A JWT intercepted in transit can be used by anyone until it expires.</li>
+          <li><strong>Consider the <code>aud</code> claim</strong> — Set and validate the audience claim to prevent tokens intended for one service from being accepted by another.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Features of This Tool -->
+    <section class="section">
+      <h2 class="section__title">Features of This JWT Tool</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Instant decoding</strong> — Paste any JWT and see the header, payload, and signature decoded in real time as you type. The token is parsed and formatted as JSON with syntax highlighting for easy reading.</li>
+          <li><strong>Claims inspector</strong> — Every claim in the payload is displayed in a structured table with human-readable descriptions. Timestamp claims (<code>exp</code>, <code>iat</code>, <code>nbf</code>) are automatically converted to local date/time with relative time indicators.</li>
+          <li><strong>Expiry detection</strong> — Tokens with an <code>exp</code> claim are automatically checked against the current time. A visual badge instantly shows whether the token is valid, expiring soon, or expired.</li>
+          <li><strong>Signature verification</strong> — Enter your HMAC secret key to verify the token's signature directly in the browser. Supports HS256, HS384, and HS512 algorithms using the Web Crypto API.</li>
+          <li><strong>Token generation</strong> — Build JWTs from scratch by editing the header and payload JSON, choosing an algorithm, and providing a secret key. Quick-add buttons for common claims (<code>sub</code>, <code>iat</code>, <code>exp</code>) speed up the process.</li>
+          <li><strong>Bearer prefix handling</strong> — Paste a token with or without the "Bearer " prefix — it's automatically stripped during decoding.</li>
+          <li><strong>100% client-side</strong> — All decoding, encoding, and verification happens entirely in your browser. Your tokens and secrets are never transmitted to any server. The tool works offline after the initial page load.</li>
+          <li><strong>No dependencies</strong> — Built with vanilla HTML, CSS, and JavaScript. No frameworks, no build tools, no third-party libraries. Uses the browser's native Web Crypto API for cryptographic operations.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2 class="section__title">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What is a JSON Web Token (JWT)?</h3>
+        <p class="faq-answer">A JSON Web Token (JWT) is a compact, URL-safe token format defined by RFC 7519. It consists of three Base64URL-encoded parts separated by dots: a header (metadata and algorithm), a payload (claims about a user or entity), and a signature (cryptographic proof of integrity). JWTs are widely used for authentication and authorization in web applications and APIs.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is it safe to paste my JWT into this tool?</h3>
+        <p class="faq-answer">Yes. This tool processes everything entirely in your browser using JavaScript. Your token is never transmitted to any server. You can verify this by checking the browser's network tab — no requests are made when you decode or generate a token. The tool works offline after the initial page load.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What JWT algorithms does this tool support?</h3>
+        <p class="faq-answer">This tool can decode JWTs signed with any algorithm, since decoding only requires Base64URL parsing. For signature verification and token generation, HMAC-based algorithms are supported: HS256 (HMAC-SHA256), HS384 (HMAC-SHA384), and HS512 (HMAC-SHA512). RSA and ECDSA verification require private/public key pairs which are not currently supported in this browser-based tool.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Can I decode a JWT without the secret key?</h3>
+        <p class="faq-answer">Yes. JWT headers and payloads are Base64URL-encoded, not encrypted. You can always decode and read the contents of any JWT without the secret key. The secret key is only needed to verify the signature (confirming the token hasn't been tampered with) or to generate new tokens.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What is the difference between encoding and encrypting?</h3>
+        <p class="faq-answer">Encoding (like Base64URL) transforms data into a different format for safe transport — it's reversible by anyone, and provides no security. Encryption transforms data so that only someone with the correct key can read it. Standard JWTs are encoded and signed but not encrypted, which means anyone can read the payload. If you need encrypted tokens, look into JWE (JSON Web Encryption, RFC 7516).</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Why does my JWT say "expired"?</h3>
+        <p class="faq-answer">If the <code>exp</code> (expiration) claim in the token's payload contains a Unix timestamp that is in the past, the token has expired. This is a normal security mechanism — tokens are designed to expire after a set period. You'll need to obtain a new token from the issuing server, typically by refreshing your session or re-authenticating.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">Tools</div>
+        <ul class="footer__links">
+          <li><a href="/json-prettier/" class="footer__link">JSON Formatter</a></li>
+          <li><a href="/uuid-generator/" class="footer__link">UUID Generator</a></li>
+          <li><a href="/jwt-decoder/" class="footer__link">JWT Decoder</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Resources</div>
+        <ul class="footer__links">
+          <li><a href="https://datatracker.ietf.org/doc/html/rfc7519" class="footer__link" target="_blank" rel="noopener">RFC 7519 (JWT)</a></li>
+          <li><a href="https://datatracker.ietf.org/doc/html/rfc7515" class="footer__link" target="_blank" rel="noopener">RFC 7515 (JWS)</a></li>
+          <li><a href="https://datatracker.ietf.org/doc/html/rfc7518" class="footer__link" target="_blank" rel="noopener">RFC 7518 (JWA)</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2025 DevTools. All decoding and encoding happens in your browser. Your tokens never leave your device.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/jwt-decoder/js/app.js"></script>
+</body>
+</html>

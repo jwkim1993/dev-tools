@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About DevTools — Free Online Developer Utilities</title>
-  <meta name="description" content="Learn about DevTools, a collection of free online developer tools including a JSON formatter and UUID generator. All processing happens client-side in your browser.">
+  <meta name="description" content="Learn about DevTools, a collection of free online developer tools including a JSON formatter, UUID generator, and JWT decoder. All processing happens client-side in your browser.">
   <link rel="canonical" href="https://devtools.pages.dev/about.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="About DevTools — Free Online Developer Utilities">
@@ -22,12 +22,7 @@
       DevTools
     </a>
     <nav>
-      <ul class="nav__links" id="navLinks">
-        <li><a href="/" class="nav__link">Tools</a></li>
-        <li><a href="/json-prettier/" class="nav__link">JSON Formatter</a></li>
-        <li><a href="/uuid-generator/" class="nav__link">UUID Generator</a></li>
-        <li><a href="/about.html" class="nav__link nav__link--active">About</a></li>
-      </ul>
+      <ul class="nav__links" id="navLinks"></ul>
     </nav>
     <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
@@ -70,6 +65,16 @@
         <li>Full RFC 9562 compliance with correct version and variant bits</li>
       </ul>
 
+      <h3>JWT Decoder &amp; Encoder</h3>
+      <p>A complete JSON Web Token tool for decoding, inspecting, verifying, and generating JWTs:</p>
+      <ul>
+        <li><strong>Instant decoding</strong> — Paste any JWT to see the header, payload, and signature decoded in real time</li>
+        <li><strong>Claims inspector</strong> — Structured table view of all claims with human-readable descriptions and timestamp conversion</li>
+        <li><strong>Expiry detection</strong> — Visual badge showing whether a token is valid, expiring soon, or expired</li>
+        <li><strong>Signature verification</strong> — Verify HMAC signatures (HS256/HS384/HS512) using the Web Crypto API</li>
+        <li><strong>Token generation</strong> — Build JWTs from scratch with a visual editor and quick-add claim buttons</li>
+      </ul>
+
       <h2>What Makes These Tools Different</h2>
       <ul>
         <li><strong>Complete privacy</strong> — All processing happens client-side. No backend, no database, no tracking of your input. Your data never leaves your device.</li>
@@ -94,6 +99,7 @@
         <ul class="footer__links">
           <li><a href="/json-prettier/" class="footer__link">JSON Formatter</a></li>
           <li><a href="/uuid-generator/" class="footer__link">UUID Generator</a></li>
+          <li><a href="/jwt-decoder/" class="footer__link">JWT Decoder</a></li>
         </ul>
       </div>
       <div class="footer__col">
