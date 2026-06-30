@@ -1,0 +1,91 @@
+/* MODE TABS */
+.enc-tab {
+  display: inline-flex;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-md);
+  padding: 2px;
+}
+.enc-tab__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-base);
+  font-size: var(--text-body-size);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  transition: background var(--motion-fast), color var(--motion-fast);
+}
+.enc-tab__btn:hover {
+  color: var(--color-ink);
+}
+.enc-tab__btn[aria-pressed="true"] {
+  background: var(--color-surface-1);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-card);
+}
+.enc-tab__btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* EDITOR LAYOUT override — use grid for divider */
+#encEditorLayout {
+  display: grid;
+  grid-template-columns: 1fr 6px 1fr;
+}
+#encEditorLayout .editor-pane {
+  min-width: 0;
+}
+
+/* TEXTAREA inside editor-pane */
+.enc-panel__textarea {
+  flex: 1;
+  width: 100%;
+  padding: var(--space-4);
+  border: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-size);
+  line-height: var(--text-mono-lh);
+  color: var(--color-ink);
+  background: var(--color-surface-1);
+  resize: none;
+  outline: none;
+}
+.enc-panel__textarea::placeholder {
+  color: var(--color-ink-subdued);
+}
+
+@media (max-width: 768px) {
+  #encEditorLayout {
+    grid-template-columns: 1fr;
+  }
+  #encEditorLayout .editor-divider {
+    width: 100%;
+    height: 6px;
+    cursor: row-resize;
+  }
+}
+
+/* CHAR COUNTER (in header) */
+.enc-counter {
+  font-size: var(--text-caption-size);
+  color: var(--color-ink-subdued);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ERROR */
+.enc-error {
+  padding: var(--space-3) var(--space-4);
+  background: rgba(209, 52, 56, 0.08);
+  border: 1px solid rgba(209, 52, 56, 0.2);
+  border-radius: var(--radius-md);
+  color: var(--color-danger);
+  font-size: var(--text-body-size);
+  margin-bottom: var(--space-4);
+}

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9694301903093195"
+         crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encoder / Decoder — Base64, URL, HTML Encode &amp; Decode Online Free</title>
+  <meta name="description" content="Free online encoder and decoder. Base64, URL, and HTML encoding/decoding instantly in your browser. No data sent to any server — 100% client-side.">
+  <meta name="keywords" content="base64 encoder, base64 decoder, url encoder, url decoder, html encoder, html decoder, percent encoding, online encoder, free encoder">
+  <link rel="canonical" href="https://dev-tool.cc/encoder-decoder/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Encoder / Decoder — Base64, URL, HTML Encode & Decode Online">
+  <meta property="og:description" content="Free online encoder and decoder. Base64, URL, and HTML encoding/decoding. All processing in your browser.">
+  <meta property="og:url" content="https://dev-tool.cc/encoder-decoder/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Encoder / Decoder — Base64, URL, HTML Online Tool">
+  <meta name="twitter:description" content="Encode and decode Base64, URL, and HTML in your browser. Free, private, no sign-up.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Cpath d='M8 11l4 5-4 5M18 21h5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/encoder-decoder/css/encoder-decoder.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Encoder / Decoder",
+    "url": "https://dev-tool.cc/encoder-decoder/",
+    "description": "Free online tool to encode and decode Base64, URL (percent-encoding), and HTML entities. All processing happens client-side in your browser.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Base64 encoding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Base64 is a binary-to-text encoding scheme that represents binary data using 64 ASCII characters (A-Z, a-z, 0-9, +, /). It's commonly used to embed binary data in text-based formats like JSON, XML, HTML, and email (MIME). Base64 encoding increases data size by approximately 33%."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is URL encoding (percent-encoding)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "URL encoding (also called percent-encoding) replaces unsafe or reserved characters in URLs with a percent sign (%) followed by their hexadecimal ASCII value. For example, spaces become %20 and ampersands become %26. This ensures URLs are transmitted correctly across the internet."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is HTML entity encoding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HTML entity encoding converts special characters into their HTML entity equivalents (e.g., < becomes &lt;, > becomes &gt;, & becomes &amp;). This prevents browsers from interpreting these characters as HTML markup and is essential for preventing XSS (Cross-Site Scripting) attacks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it safe to use this tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. All encoding and decoding happens entirely in your browser using JavaScript. No data is ever sent to any server. You can verify this by checking the browser's Network tab. The tool works offline after the initial page load."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks"></ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1 class="hero__title">Encoder / Decoder</h1>
+      <p class="hero__subtitle">Encode and decode Base64, URL, and HTML entities &mdash; entirely in your browser</p>
+    </section>
+
+    <!-- COMMAND BAR -->
+    <div class="command-bar" role="toolbar" aria-label="Encoding mode selection">
+      <div class="command-bar__group">
+        <div class="enc-tab" role="group" aria-label="Encoding type">
+          <button class="enc-tab__btn" aria-pressed="true" data-mode="base64">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h2M5 8h4M5 10h3"/></svg>
+            Base64
+          </button>
+          <button class="enc-tab__btn" aria-pressed="false" data-mode="url">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 10.5l-1 1a2.12 2.12 0 01-3-3l2-2a2.12 2.12 0 013 0"/><path d="M9.5 5.5l1-1a2.12 2.12 0 013 3l-2 2a2.12 2.12 0 01-3 0"/></svg>
+            URL
+          </button>
+          <button class="enc-tab__btn" aria-pressed="false" data-mode="html">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3L1 8l4 5"/><path d="M11 3l4 5-4 5"/></svg>
+            HTML
+          </button>
+        </div>
+      </div>
+      <div class="command-bar__separator" aria-hidden="true"></div>
+      <div class="command-bar__group">
+        <button class="btn btn--subtle btn--sm" id="btnClearAll">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+          Clear All
+        </button>
+      </div>
+    </div>
+
+    <!-- ERROR -->
+    <div class="enc-error" id="encError" style="display:none" role="alert"></div>
+
+    <!-- EDITOR LAYOUT (mirrors JSON Stringify) -->
+    <div class="editor-layout" id="encEditorLayout">
+      <div class="editor-pane" id="textPane">
+        <div class="editor-pane__header">
+          <span class="editor-pane__title">Text</span>
+          <div class="editor-pane__actions">
+            <span class="enc-counter" id="inputCounter">0 chars</span>
+            <button class="btn btn--subtle btn--icon btn--sm" id="btnPasteText" title="Paste" aria-label="Paste into text panel">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H6a1 1 0 00-1 1v1H4a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V5a1 1 0 00-1-1h-1V3a1 1 0 00-1-1z"/><path d="M6 2h4v2H6z"/></svg>
+            </button>
+            <button class="btn btn--subtle btn--icon btn--sm" id="btnCopyText" title="Copy text" aria-label="Copy text">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+            </button>
+          </div>
+        </div>
+        <textarea id="encInput" class="enc-panel__textarea" placeholder="Paste or type plain text here...&#10;&#10;e.g. Hello, World!" spellcheck="false" aria-label="Text input"></textarea>
+      </div>
+
+      <div class="editor-divider" id="encDivider" role="separator" aria-label="Resize panels"></div>
+
+      <div class="editor-pane" id="encodedPane">
+        <div class="editor-pane__header">
+          <span class="editor-pane__title">Encoded</span>
+          <div class="editor-pane__actions">
+            <span class="enc-counter" id="outputCounter">0 chars</span>
+            <button class="btn btn--subtle btn--icon btn--sm" id="btnPasteEncoded" title="Paste" aria-label="Paste into encoded panel">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H6a1 1 0 00-1 1v1H4a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V5a1 1 0 00-1-1h-1V3a1 1 0 00-1-1z"/><path d="M6 2h4v2H6z"/></svg>
+            </button>
+            <button class="btn btn--subtle btn--icon btn--sm" id="btnCopyEncoded" title="Copy encoded" aria-label="Copy encoded">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+            </button>
+          </div>
+        </div>
+        <textarea id="encOutput" class="enc-panel__textarea" placeholder="Encoded result appears here...&#10;&#10;e.g. SGVsbG8sIFdvcmxkIQ==" spellcheck="false" aria-label="Encoded output"></textarea>
+      </div>
+    </div>
+
+    <!-- ==================== EDUCATIONAL CONTENT ==================== -->
+
+    <!-- Base64 -->
+    <section class="section">
+      <h2 class="section__title">What is Base64 Encoding?</h2>
+      <div class="content">
+        <p>Base64 is a binary-to-text encoding scheme defined by <a href="https://datatracker.ietf.org/doc/html/rfc4648" target="_blank" rel="noopener">RFC 4648</a>. It represents binary data using a set of 64 printable ASCII characters: A&ndash;Z, a&ndash;z, 0&ndash;9, <code>+</code>, and <code>/</code>, with <code>=</code> used for padding. This makes it safe to embed binary data inside text-based formats like JSON, XML, HTML, CSS, and email (MIME).</p>
+        <p>Common use cases include encoding images as data URIs, transmitting binary data in API payloads, encoding email attachments (MIME), and storing binary data in text-only databases or configuration files.</p>
+        <p>Base64 encoding increases data size by approximately 33% (every 3 bytes of input become 4 bytes of output). It is <strong>not encryption</strong> — anyone can decode Base64 without a key.</p>
+      </div>
+    </section>
+
+    <!-- URL Encoding -->
+    <section class="section">
+      <h2 class="section__title">What is URL Encoding (Percent-Encoding)?</h2>
+      <div class="content">
+        <p>URL encoding, formally called percent-encoding and defined by <a href="https://datatracker.ietf.org/doc/html/rfc3986" target="_blank" rel="noopener">RFC 3986</a>, replaces unsafe or reserved characters in URLs with a <code>%</code> followed by two hexadecimal digits representing the character's ASCII code. For example, a space becomes <code>%20</code> and an ampersand becomes <code>%26</code>.</p>
+        <p>This encoding is essential when passing user input as URL query parameters, constructing API requests with special characters, building OAuth signatures, or encoding form data (<code>application/x-www-form-urlencoded</code>).</p>
+        <p>Characters that are safe in URLs (unreserved characters) include letters, digits, <code>-</code>, <code>_</code>, <code>.</code>, and <code>~</code>. Everything else should be percent-encoded when used as data within a URL component.</p>
+      </div>
+    </section>
+
+    <!-- HTML Encoding -->
+    <section class="section">
+      <h2 class="section__title">What is HTML Entity Encoding?</h2>
+      <div class="content">
+        <p>HTML entity encoding converts characters that have special meaning in HTML into their entity references. For example, <code>&lt;</code> becomes <code>&amp;lt;</code>, <code>&gt;</code> becomes <code>&amp;gt;</code>, <code>&amp;</code> becomes <code>&amp;amp;</code>, and <code>&quot;</code> becomes <code>&amp;quot;</code>.</p>
+        <p>This encoding is critical for preventing <strong>Cross-Site Scripting (XSS)</strong> attacks — if user input is rendered as HTML without encoding, malicious scripts could execute in the browser. HTML encoding ensures that user-supplied text is displayed as text, not interpreted as markup.</p>
+        <p>Use HTML encoding when displaying user-generated content on web pages, building HTML strings in JavaScript, or inserting dynamic values into HTML attributes.</p>
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="section">
+      <h2 class="section__title">Encoding Comparison</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Encoding</th>
+            <th>Primary Use</th>
+            <th>Input Example</th>
+            <th>Output Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Base64</strong></td>
+            <td>Binary-to-text, data URIs, API payloads</td>
+            <td><code>Hello!</code></td>
+            <td><code>SGVsbG8h</code></td>
+          </tr>
+          <tr>
+            <td><strong>URL</strong></td>
+            <td>Query parameters, form data, API requests</td>
+            <td><code>a=1&b=2</code></td>
+            <td><code>a%3D1%26b%3D2</code></td>
+          </tr>
+          <tr>
+            <td><strong>HTML</strong></td>
+            <td>XSS prevention, rendering user content</td>
+            <td><code>&lt;b&gt;hi&lt;/b&gt;</code></td>
+            <td><code>&amp;lt;b&amp;gt;hi&amp;lt;/b&amp;gt;</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+      <h2 class="section__title">Features of This Tool</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Three encodings in one</strong> — Switch between Base64, URL (percent-encoding), and HTML entity encoding with a single click. No need to visit separate tools.</li>
+          <li><strong>Real-time encoding</strong> — Text is encoded automatically as you type, with instant feedback. Decoding is available with one click.</li>
+          <li><strong>Swap input/output</strong> — One-click swap lets you quickly decode an encoded result or chain multiple operations.</li>
+          <li><strong>Unicode support</strong> — Full UTF-8 support for Base64 encoding. Multi-byte characters (emoji, CJK, accented characters) are handled correctly.</li>
+          <li><strong>Character counter</strong> — See input and output lengths at a glance, useful for checking size overhead from encoding.</li>
+          <li><strong>100% client-side</strong> — All encoding and decoding happens in your browser. No data is ever sent to any server.</li>
+          <li><strong>No dependencies</strong> — Built with vanilla HTML, CSS, and JavaScript. No frameworks, no build tools.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2 class="section__title">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What is Base64 encoding?</h3>
+        <p class="faq-answer">Base64 is a binary-to-text encoding scheme that represents binary data using 64 ASCII characters (A-Z, a-z, 0-9, +, /). It's commonly used to embed binary data in text-based formats like JSON, XML, HTML, and email (MIME). Base64 encoding increases data size by approximately 33%.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What is URL encoding (percent-encoding)?</h3>
+        <p class="faq-answer">URL encoding (also called percent-encoding) replaces unsafe or reserved characters in URLs with a percent sign (%) followed by their hexadecimal ASCII value. For example, spaces become %20 and ampersands become %26. This ensures URLs are transmitted correctly across the internet.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What is HTML entity encoding?</h3>
+        <p class="faq-answer">HTML entity encoding converts special characters into their HTML entity equivalents (e.g., &lt; becomes &amp;lt;, &gt; becomes &amp;gt;, &amp; becomes &amp;amp;). This prevents browsers from interpreting these characters as HTML markup and is essential for preventing XSS (Cross-Site Scripting) attacks.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is it safe to use this tool?</h3>
+        <p class="faq-answer">Yes. All encoding and decoding happens entirely in your browser using JavaScript. No data is ever sent to any server. You can verify this by checking the browser's Network tab. The tool works offline after the initial page load.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is Base64 the same as encryption?</h3>
+        <p class="faq-answer">No. Base64 is an encoding, not encryption. Anyone can decode Base64 without a key — it provides no security or confidentiality. Its purpose is to safely represent binary data in text formats. For actual encryption, use algorithms like AES or RSA.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">When should I use URL encoding vs. HTML encoding?</h3>
+        <p class="faq-answer">Use URL encoding when putting data into URLs (query parameters, path segments, form submissions). Use HTML encoding when displaying data inside HTML documents to prevent the browser from treating it as markup. They serve different purposes and are not interchangeable.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">Tools</div>
+        <ul class="footer__links">
+          <li><a href="/json-prettier/" class="footer__link">JSON Formatter</a></li>
+          <li><a href="/uuid-generator/" class="footer__link">UUID Generator</a></li>
+          <li><a href="/jwt-decoder/" class="footer__link">JWT Decoder</a></li>
+          <li><a href="/cron-expression/" class="footer__link">Cron Expression</a></li>
+          <li><a href="/regex-tester/" class="footer__link">Regex Tester</a></li>
+          <li><a href="/encoder-decoder/" class="footer__link">Encoder / Decoder</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Resources</div>
+        <ul class="footer__links">
+          <li><a href="https://datatracker.ietf.org/doc/html/rfc4648" class="footer__link" target="_blank" rel="noopener">RFC 4648 (Base64)</a></li>
+          <li><a href="https://datatracker.ietf.org/doc/html/rfc3986" class="footer__link" target="_blank" rel="noopener">RFC 3986 (URI)</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2026 DevTools. All encoding and decoding happens in your browser. Your data never leaves your device.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/encoder-decoder/js/app.js"></script>
+  <script src="/js/cookie-consent.js"></script>
+</body>
+</html>

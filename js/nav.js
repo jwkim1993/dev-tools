@@ -8,6 +8,7 @@
     { href: '/jwt-decoder/', label: 'JWT Decoder' },
     { href: '/cron-expression/', label: 'Cron Expression' },
     { href: '/regex-tester/', label: 'Regex Tester' },
+    { href: '/encoder-decoder/', label: 'Encoder / Decoder' },
     { href: '/about.html', label: 'About' },
   ];
 
