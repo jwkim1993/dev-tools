@@ -258,13 +258,13 @@
 /* PRESETS */
 .cron-presets {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: var(--space-2);
   margin-bottom: var(--space-5);
 }
 .cron-preset {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   background: var(--color-surface-1);
@@ -277,6 +277,7 @@
   transition: border-color var(--motion-fast), background var(--motion-fast);
   text-align: left;
   width: 100%;
+  overflow: hidden;
 }
 .cron-preset:hover {
   border-color: var(--color-primary);
@@ -292,11 +293,16 @@
   color: var(--color-primary);
   font-weight: 600;
   white-space: nowrap;
-  min-width: 72px;
+  flex-shrink: 0;
+  width: 105px;
 }
 .cron-preset__label {
   color: var(--color-ink-muted);
   font-size: var(--text-caption-size);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 /* BUILDER */
