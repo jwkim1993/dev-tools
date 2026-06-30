@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9694301903093195"
+         crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diff Viewer — Compare Text Online Free | Side-by-Side &amp; Unified Diff</title>
+  <meta name="description" content="Free online diff viewer and text comparison tool. Compare two texts side-by-side or in unified view with line-level and character-level highlighting. 100% client-side — your data never leaves your browser.">
+  <meta name="keywords" content="diff viewer, text compare, diff tool, online diff, compare text, text difference, side by side diff, unified diff, code compare, free diff tool">
+  <link rel="canonical" href="https://dev-tool.cc/diff-viewer/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Diff Viewer — Compare Text Online Free">
+  <meta property="og:description" content="Compare two texts with line-level and character-level diff highlighting. Side-by-side and unified views. Free, private, no sign-up.">
+  <meta property="og:url" content="https://dev-tool.cc/diff-viewer/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Diff Viewer — Online Text Comparison Tool">
+  <meta name="twitter:description" content="Compare text differences with inline highlights. Side-by-side and unified diff views. 100% client-side.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Cpath d='M8 11l4 5-4 5M18 21h5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/diff-viewer/css/diff-viewer.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Diff Viewer",
+    "url": "https://dev-tool.cc/diff-viewer/",
+    "description": "Free online diff viewer and text comparison tool. Compare two texts side-by-side or in unified view with line-level and character-level highlighting. All processing happens client-side in your browser.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a diff viewer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A diff viewer is a tool that compares two pieces of text and highlights the differences between them. It shows which lines were added, removed, or modified, making it easy to understand what changed between two versions of a document or code file."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between unified and side-by-side diff?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Unified diff shows all changes in a single column with + and - markers for added and removed lines. Side-by-side diff shows the original text on the left and the modified text on the right, aligned line-by-line. Unified is more compact; side-by-side is easier to visually scan."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this diff tool safe for comparing sensitive data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. All text comparison happens entirely in your browser using JavaScript. No data is ever sent to any server. You can verify this by checking the browser's Network tab. The tool works offline after the initial page load."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What diff algorithm does this tool use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This tool uses a Longest Common Subsequence (LCS) algorithm to compute line-level diffs, and a character-level LCS for inline highlighting within modified lines. This produces clean, minimal diffs similar to what you see in Git and code review tools."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks"></ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1 class="hero__title">Diff Viewer</h1>
+      <p class="hero__subtitle">Compare two texts and visualize differences &mdash; line-by-line with character-level highlighting</p>
+    </section>
+
+    <!-- COMMAND BAR -->
+    <div class="command-bar" role="toolbar" aria-label="Diff controls">
+      <div class="command-bar__group">
+        <button class="btn btn--primary btn--sm" id="btnCompare">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          Compare
+        </button>
+        <button class="btn btn--subtle btn--sm" id="btnSample">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h8v8H4z"/><path d="M6 6h4"/><path d="M6 8h4"/><path d="M6 10h2"/></svg>
+          Sample
+        </button>
+      </div>
+      <div class="command-bar__separator" aria-hidden="true"></div>
+      <div class="command-bar__group">
+        <div class="diff-tab" role="group" aria-label="View mode">
+          <button class="diff-tab__btn" aria-pressed="true" data-mode="unified">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 4h10M3 8h10M3 12h10"/></svg>
+            Unified
+          </button>
+          <button class="diff-tab__btn" aria-pressed="false" data-mode="split">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="12" height="10" rx="1"/><line x1="8" y1="3" x2="8" y2="13"/></svg>
+            Side by Side
+          </button>
+        </div>
+      </div>
+      <div class="command-bar__separator" aria-hidden="true"></div>
+      <div class="command-bar__group">
+        <button class="btn btn--subtle btn--sm" id="btnSwap" title="Swap original and modified">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h8M8 2l4 4-4 4"/></svg>
+          Swap
+        </button>
+        <button class="btn btn--subtle btn--sm" id="btnCopyDiff" title="Copy diff as text">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+          Copy Diff
+        </button>
+        <button class="btn btn--subtle btn--sm" id="btnClearAll">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+          Clear All
+        </button>
+      </div>
+    </div>
+
+    <!-- INPUT PANELS -->
+    <div class="editor-layout" id="diffEditorLayout">
+      <div class="editor-pane">
+        <div class="editor-pane__header">
+          <span class="editor-pane__title">Original</span>
+          <div class="editor-pane__actions">
+            <span class="diff-counter" id="origCounter">0 lines</span>
+            <button class="btn btn--subtle btn--icon btn--sm" id="btnPasteOrig" title="Paste" aria-label="Paste into original panel">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H6a1 1 0 00-1 1v1H4a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V5a1 1 0 00-1-1h-1V3a1 1 0 00-1-1z"/><path d="M6 2h4v2H6z"/></svg>
+            </button>
+            <button class="btn btn--subtle btn--icon btn--sm" id="btnCopyOrig" title="Copy original" aria-label="Copy original text">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+            </button>
+          </div>
+        </div>
+        <textarea id="originalInput" class="diff-input__textarea" placeholder="Paste or type original text here...&#10;&#10;Tip: Press Ctrl+Enter to compare" spellcheck="false" aria-label="Original text input"></textarea>
+      </div>
+
+      <div class="editor-divider" id="diffDivider" role="separator" aria-label="Resize panels"></div>
+
+      <div class="editor-pane">
+        <div class="editor-pane__header">
+          <span class="editor-pane__title">Modified</span>
+          <div class="editor-pane__actions">
+            <span class="diff-counter" id="modCounter">0 lines</span>
+            <button class="btn btn--subtle btn--icon btn--sm" id="btnPasteMod" title="Paste" aria-label="Paste into modified panel">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2H6a1 1 0 00-1 1v1H4a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V5a1 1 0 00-1-1h-1V3a1 1 0 00-1-1z"/><path d="M6 2h4v2H6z"/></svg>
+            </button>
+            <button class="btn btn--subtle btn--icon btn--sm" id="btnCopyMod" title="Copy modified" aria-label="Copy modified text">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 0112 2.5V5"/></svg>
+            </button>
+          </div>
+        </div>
+        <textarea id="modifiedInput" class="diff-input__textarea" placeholder="Paste or type modified text here...&#10;&#10;Tip: Press Ctrl+Enter to compare" spellcheck="false" aria-label="Modified text input"></textarea>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="diff-stats" id="diffStats" style="display:none" role="status" aria-live="polite"></div>
+
+    <!-- DIFF OUTPUT -->
+    <div class="diff-output">
+      <div class="diff-output__header">
+        <span class="diff-output__title">Diff Result</span>
+      </div>
+      <div class="diff-output__body" id="diffBody"></div>
+    </div>
+
+    <!-- ==================== EDUCATIONAL CONTENT ==================== -->
+    <div class="content-divider"></div>
+
+    <!-- What is a Diff Viewer -->
+    <section class="section">
+      <h2 class="section__title">What is a Diff Viewer?</h2>
+      <div class="content">
+        <p>A diff viewer (or diff tool) is a utility that compares two pieces of text and highlights the differences between them. It analyzes both inputs line by line, identifying which lines were <strong>added</strong>, <strong>removed</strong>, or <strong>modified</strong>. Diff tools are essential in software development for code review, debugging, and version control workflows.</p>
+        <p>The concept of "diff" originates from the Unix <code>diff</code> command, first released in 1974 as part of AT&amp;T's Unix. Modern diff tools build on the same core algorithms — primarily the <strong>Longest Common Subsequence (LCS)</strong> algorithm — to produce minimal, human-readable change sets. Tools like Git, GitHub, GitLab, and Bitbucket all use variations of diff algorithms to display code changes in pull requests and commits.</p>
+        <p>This online diff viewer runs entirely in your browser. It computes diffs using a JavaScript implementation of the LCS algorithm, with additional character-level diffing for modified lines to show exactly which parts of a line changed. No data is ever sent to any server.</p>
+      </div>
+    </section>
+
+    <!-- Unified vs Side-by-Side -->
+    <section class="section">
+      <h2 class="section__title">Unified vs. Side-by-Side Diff</h2>
+      <div class="content">
+        <p>There are two primary ways to display text differences, each with distinct advantages:</p>
+        <h3>Unified Diff</h3>
+        <p>Unified diff shows all changes in a single column. Removed lines are prefixed with <code>-</code> and added lines with <code>+</code>. Unchanged (context) lines appear without a prefix. This format is compact and widely used in command-line tools, patch files, and Git output (<code>git diff</code>). It is ideal when you want a concise overview of changes.</p>
+        <h3>Side-by-Side Diff</h3>
+        <p>Side-by-side diff places the original text on the left and the modified text on the right, aligned line by line. This makes it easy to visually scan changes and see the "before and after" simultaneously. Most code review platforms (GitHub, GitLab, Bitbucket, Azure DevOps) offer a side-by-side view as the default for pull request reviews.</p>
+      </div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>View Mode</th>
+            <th>Best For</th>
+            <th>Trade-off</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Unified</strong></td>
+            <td>Compact overview, patch files, terminal output</td>
+            <td>Harder to compare long lines visually</td>
+          </tr>
+          <tr>
+            <td><strong>Side by Side</strong></td>
+            <td>Code review, visual comparison, long documents</td>
+            <td>Uses more horizontal space</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="section">
+      <h2 class="section__title">Common Use Cases for Text Comparison</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Code review</strong> — Compare two versions of a source file to understand what changed in a commit, pull request, or branch merge.</li>
+          <li><strong>Configuration auditing</strong> — Diff configuration files (YAML, JSON, INI, TOML) to find unintended changes between environments (dev, staging, production).</li>
+          <li><strong>Document comparison</strong> — Compare two versions of a contract, specification, or policy document to identify edits.</li>
+          <li><strong>API response debugging</strong> — Compare expected vs. actual API responses to locate discrepancies.</li>
+          <li><strong>Database migration verification</strong> — Diff SQL migration scripts or schema dumps to ensure changes are correct before running them.</li>
+          <li><strong>Merge conflict resolution</strong> — Paste the two conflicting versions to understand the differences before resolving a Git merge conflict.</li>
+          <li><strong>Log analysis</strong> — Compare log outputs from two test runs to find differences in behavior.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+      <h2 class="section__title">Features of This Diff Tool</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Line-level diff</strong> — Compares text line by line using the Longest Common Subsequence (LCS) algorithm, the same family of algorithms used by Git and other professional diff tools.</li>
+          <li><strong>Character-level highlighting</strong> — Within modified lines, individual characters that changed are highlighted with inline markers, making it easy to spot small edits in long lines.</li>
+          <li><strong>Two view modes</strong> — Switch between unified diff (single column with +/- markers) and side-by-side diff (left/right panel comparison) with one click.</li>
+          <li><strong>Change statistics</strong> — See at a glance how many lines were added, deleted, and unchanged, along with the total line count.</li>
+          <li><strong>Swap panels</strong> — Instantly swap the original and modified text to reverse the comparison direction.</li>
+          <li><strong>Copy diff output</strong> — Export the diff result as a unified diff text format, suitable for sharing or pasting into issues and documentation.</li>
+          <li><strong>Sample data</strong> — Load a built-in sample to explore the tool's features without preparing your own test data.</li>
+          <li><strong>Keyboard shortcut</strong> — Press <kbd>Ctrl+Enter</kbd> (or <kbd>⌘+Enter</kbd>) to compare instantly without reaching for the mouse.</li>
+          <li><strong>Resizable panels</strong> — Drag the divider between the original and modified panels to adjust their width.</li>
+          <li><strong>100% client-side</strong> — All comparison happens in your browser. No data is ever sent to any server. Works offline after the initial page load.</li>
+          <li><strong>No dependencies</strong> — Built with vanilla HTML, CSS, and JavaScript. No frameworks, no build tools, no npm packages.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section">
+      <h2 class="section__title">How the Diff Algorithm Works</h2>
+      <div class="content">
+        <p>This diff viewer uses a two-pass approach to compute differences:</p>
+        <h3>Pass 1: Line-Level Diff (LCS)</h3>
+        <p>The tool splits both texts into lines and computes the <strong>Longest Common Subsequence (LCS)</strong> — the longest sequence of lines that appear in both texts in the same order. Lines present in the LCS are marked as "unchanged." Lines in the original but not in the LCS are "deleted," and lines in the modified text but not in the LCS are "added."</p>
+        <p>The LCS algorithm runs in O(m×n) time and space, where m and n are the line counts of the two inputs. For most practical inputs (up to a few thousand lines), this executes in milliseconds.</p>
+        <h3>Pass 2: Character-Level Diff (Inline Highlighting)</h3>
+        <p>When a deleted line is immediately followed by an added line (suggesting a modification rather than a pure addition/deletion), the tool runs a second LCS pass at the character level. This highlights exactly which characters within the line changed, making small edits (typo fixes, variable renames, parameter additions) immediately visible.</p>
+        <p>For very long lines (over ~700 characters), the character-level diff falls back to highlighting the entire line to avoid performance issues.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2 class="section__title">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What is a diff viewer?</h3>
+        <p class="faq-answer">A diff viewer is a tool that compares two pieces of text and highlights the differences between them. It shows which lines were added, removed, or modified, making it easy to understand what changed between two versions of a document or code file.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What is the difference between unified and side-by-side diff?</h3>
+        <p class="faq-answer">Unified diff shows all changes in a single column with + and - markers for added and removed lines. Side-by-side diff shows the original text on the left and the modified text on the right, aligned line-by-line. Unified is more compact; side-by-side is easier to visually scan.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is this diff tool safe for comparing sensitive data?</h3>
+        <p class="faq-answer">Yes. All text comparison happens entirely in your browser using JavaScript. No data is ever sent to any server. You can verify this by checking the browser's Network tab — no requests are made when you click Compare. The tool works offline after the initial page load.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What diff algorithm does this tool use?</h3>
+        <p class="faq-answer">This tool uses a Longest Common Subsequence (LCS) algorithm to compute line-level diffs, and a character-level LCS for inline highlighting within modified lines. This produces clean, minimal diffs similar to what you see in Git and code review tools.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Can I compare code files with this tool?</h3>
+        <p class="faq-answer">Yes. This diff viewer works with any plain text, including source code in any programming language, configuration files (JSON, YAML, TOML, INI), SQL scripts, Markdown, and more. It uses a monospace font for accurate alignment.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">How large of a file can I compare?</h3>
+        <p class="faq-answer">The tool handles texts up to several thousand lines comfortably in most browsers. For very large files (10,000+ lines), the comparison may take a few seconds depending on your device. All processing happens in your browser's memory, so available RAM is the practical limit.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What does the character-level highlighting show?</h3>
+        <p class="faq-answer">When a line is modified (not purely added or deleted), the diff viewer highlights the specific characters that changed within that line. Deleted characters are shown in red and added characters in green, making it easy to spot small edits like typos, variable renames, or parameter changes.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">Tools</div>
+        <ul class="footer__links">
+          <li><a href="/json-prettier/" class="footer__link">JSON Formatter</a></li>
+          <li><a href="/uuid-generator/" class="footer__link">UUID Generator</a></li>
+          <li><a href="/jwt-decoder/" class="footer__link">JWT Decoder</a></li>
+          <li><a href="/cron-expression/" class="footer__link">Cron Expression</a></li>
+          <li><a href="/regex-tester/" class="footer__link">Regex Tester</a></li>
+          <li><a href="/encoder-decoder/" class="footer__link">Encoder / Decoder</a></li>
+          <li><a href="/diff-viewer/" class="footer__link">Diff Viewer</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Resources</div>
+        <ul class="footer__links">
+          <li><a href="https://en.wikipedia.org/wiki/Diff" class="footer__link" target="_blank" rel="noopener">Diff (Wikipedia)</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Longest_common_subsequence" class="footer__link" target="_blank" rel="noopener">LCS Algorithm</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2026 DevTools. All comparison happens in your browser. Your data never leaves your device.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/diff-viewer/js/app.js"></script>
+  <script src="/js/cookie-consent.js"></script>
+</body>
+</html>

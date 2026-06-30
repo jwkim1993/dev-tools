@@ -1,0 +1,258 @@
+/* DIFF VIEWER */
+
+.diff-input__textarea {
+  width: 100%;
+  flex: 1;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-size);
+  line-height: var(--text-mono-lh);
+  color: var(--color-ink);
+  background: var(--color-surface-1);
+  tab-size: 2;
+}
+.diff-input__textarea::placeholder {
+  color: var(--color-ink-subdued);
+}
+
+/* VIEW MODE TABS */
+.diff-tab {
+  display: flex;
+  gap: var(--space-1);
+}
+.diff-tab__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 28px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-1);
+  color: var(--color-ink-muted);
+  font-family: var(--font-base);
+  font-size: var(--text-caption-size);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
+}
+.diff-tab__btn:hover {
+  background: var(--color-surface-2);
+  color: var(--color-ink);
+}
+.diff-tab__btn[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+.diff-tab__btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* STATS BAR */
+.diff-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-caption-size);
+  color: var(--color-ink-muted);
+  flex-wrap: wrap;
+}
+.diff-stats__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: 600;
+}
+.diff-stats__item--add {
+  color: var(--color-success);
+}
+.diff-stats__item--del {
+  color: var(--color-danger);
+}
+.diff-stats__item--mod {
+  color: #986F0B;
+}
+
+/* DIFF OUTPUT */
+.diff-output {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  background: var(--color-surface-1);
+  margin-bottom: var(--space-5);
+}
+.diff-output__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3);
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+  height: 36px;
+  flex-shrink: 0;
+}
+.diff-output__title {
+  font-size: var(--text-caption-size);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.diff-output__body {
+  overflow: auto;
+  max-height: 600px;
+}
+
+/* UNIFIED VIEW */
+.diff-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-size);
+  line-height: var(--text-mono-lh);
+}
+.diff-table td {
+  padding: 0 var(--space-3);
+  vertical-align: top;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.diff-table__ln {
+  width: 1px;
+  min-width: 40px;
+  text-align: right;
+  padding-right: var(--space-2);
+  color: var(--color-ink-subdued);
+  user-select: none;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  font-size: 11px;
+}
+.diff-table__sign {
+  width: 1px;
+  min-width: 20px;
+  text-align: center;
+  color: var(--color-ink-muted);
+  user-select: none;
+  font-weight: 600;
+}
+.diff-table__content {
+  width: 100%;
+}
+
+/* LINE COLORS */
+.diff-line--add {
+  background: rgba(16, 124, 16, 0.08);
+}
+.diff-line--add .diff-table__sign {
+  color: var(--color-success);
+}
+.diff-line--del {
+  background: rgba(209, 52, 56, 0.08);
+}
+.diff-line--del .diff-table__sign {
+  color: var(--color-danger);
+}
+.diff-line--mod {
+  background: rgba(152, 111, 11, 0.06);
+}
+.diff-line--ctx {
+  background: transparent;
+}
+
+/* INLINE HIGHLIGHTS */
+.diff-char--add {
+  background: rgba(16, 124, 16, 0.22);
+  border-radius: 2px;
+}
+.diff-char--del {
+  background: rgba(209, 52, 56, 0.22);
+  border-radius: 2px;
+}
+
+/* SIDE-BY-SIDE VIEW */
+.diff-side {
+  display: flex;
+  width: 100%;
+}
+.diff-side__pane {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+}
+.diff-side__pane:first-child {
+  border-right: 2px solid var(--color-border);
+}
+.diff-side__pane .diff-table {
+  width: 100%;
+}
+
+/* EMPTY STATE */
+.diff-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10) var(--space-6);
+  color: var(--color-ink-subdued);
+  text-align: center;
+}
+.diff-empty svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-4);
+  opacity: 0.4;
+}
+.diff-empty__text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-2);
+}
+.diff-empty__hint {
+  font-size: var(--text-body-size);
+  color: var(--color-ink-subdued);
+}
+
+/* LINE COUNTER */
+.diff-counter {
+  font-size: 11px;
+  color: var(--color-ink-subdued);
+  font-family: var(--font-mono);
+}
+
+/* SEPARATOR FOR HUNKS */
+.diff-hunk-sep td {
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-surface-2);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-ink-subdued);
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .diff-side {
+    flex-direction: column;
+  }
+  .diff-side__pane:first-child {
+    border-right: none;
+    border-bottom: 2px solid var(--color-border);
+  }
+  .diff-stats {
+    gap: var(--space-2);
+  }
+}

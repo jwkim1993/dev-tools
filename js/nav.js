@@ -9,6 +9,7 @@
     { href: '/cron-expression/', label: 'Cron Expression' },
     { href: '/regex-tester/', label: 'Regex Tester' },
     { href: '/encoder-decoder/', label: 'Encoder / Decoder' },
+    { href: '/diff-viewer/', label: 'Diff Viewer' },
     { href: '/about.html', label: 'About' },
   ];
 

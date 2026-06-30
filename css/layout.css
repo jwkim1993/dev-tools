@@ -253,6 +253,13 @@ img {
   border-top: 1px solid var(--color-border);
 }
 
+/* CONTENT DIVIDER (between tool UI and educational content) */
+.content-divider {
+  margin: var(--space-10) 0;
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
 /* CARD GRID */
 .card-grid {
   display: grid;
