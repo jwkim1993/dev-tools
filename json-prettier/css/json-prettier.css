@@ -1,3 +1,68 @@
+/* JSON TAB TOGGLE */
+.json-tab {
+  display: inline-flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.json-tab__btn {
+  padding: var(--space-2) var(--space-5);
+  cursor: pointer;
+  color: var(--color-ink-muted);
+  font-family: var(--font-base);
+  font-size: var(--text-body-size);
+  font-weight: 400;
+  background: var(--color-surface-1);
+  border: none;
+  border-right: 1px solid var(--color-border);
+  transition: background var(--motion-fast) var(--motion-easing),
+              color var(--motion-fast) var(--motion-easing);
+  line-height: 1;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.json-tab__btn:last-child {
+  border-right: none;
+}
+.json-tab__btn:hover {
+  background: var(--color-surface-2);
+  color: var(--color-ink);
+}
+.json-tab__btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+  z-index: 1;
+}
+.json-tab__btn[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+}
+.json-tab__btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* STRINGIFY SECTION */
+.stringify-error {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(209, 52, 56, 0.08);
+  border: 1px solid rgba(209, 52, 56, 0.3);
+  border-radius: var(--radius-md);
+  color: var(--color-danger);
+  font-size: var(--text-body-size);
+}
+.stringify-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-9);
+}
+
 /* CHECKBOX */
 .checkbox {
   display: inline-flex;

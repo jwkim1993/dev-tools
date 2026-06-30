@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSON Formatter & Validator Online — Format, Beautify, Minify JSON</title>
-  <meta name="description" content="Free online JSON formatter, validator, and beautifier. Paste, upload, or load JSON — format with custom indentation, minify, view as tree, and validate with detailed error messages. All processing happens client-side.">
-  <meta name="keywords" content="JSON formatter, JSON validator, JSON beautifier, JSON minify, JSON tree view, format JSON online, validate JSON, pretty print JSON">
+  <title>JSON Formatter, Validator &amp; Stringify Online — Format, Beautify, Minify, Stringify JSON</title>
+  <meta name="description" content="Free online JSON formatter, validator, beautifier, and stringify/parse tool. Format with custom indentation, minify, view as tree, validate, and convert between JSON and stringified strings. All processing happens client-side.">
+  <meta name="keywords" content="JSON formatter, JSON validator, JSON beautifier, JSON minify, JSON stringify, JSON parse, JSON tree view, format JSON online, validate JSON, pretty print JSON, JSON to string, string to JSON">
   <link rel="canonical" href="https://devtools.pages.dev/json-prettier/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="JSON Formatter & Validator Online — Format, Beautify, Minify JSON">
@@ -108,9 +108,28 @@
 
   <main class="main">
     <section class="hero">
-      <h1 class="hero__title">JSON Formatter &amp; Validator</h1>
-      <p class="hero__subtitle">Format, validate, and explore JSON data — fast, private, and entirely in your browser</p>
+      <h1 class="hero__title">JSON Formatter, Validator &amp; Stringify</h1>
+      <p class="hero__subtitle">Format, validate, stringify, and explore JSON data — fast, private, and entirely in your browser</p>
     </section>
+
+    <!-- MODE TABS -->
+    <div class="command-bar" role="toolbar" aria-label="JSON mode selection">
+      <div class="command-bar__group">
+        <div class="json-tab" role="group" aria-label="Mode">
+          <button class="json-tab__btn" aria-pressed="true" data-mode="formatter">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 4h10M3 8h6M3 12h8"/></svg>
+            Formatter
+          </button>
+          <button class="json-tab__btn" aria-pressed="false" data-mode="stringify">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h1M11 4h1M4 12h1M11 12h1"/><path d="M6 2v12M10 2v12"/></svg>
+            Stringify
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== FORMATTER SECTION ==================== -->
+    <section id="formatterSection">
 
     <!-- COMMAND BAR -->
     <div class="command-bar" role="toolbar" aria-label="JSON formatting controls">
@@ -239,6 +258,96 @@
         </div>
       </div>
     </div>
+
+    </section><!-- /formatterSection -->
+
+    <!-- ==================== STRINGIFY SECTION ==================== -->
+    <section id="stringifySection" style="display:none">
+
+      <!-- COMMAND BAR -->
+      <div class="command-bar" role="toolbar" aria-label="Stringify controls">
+        <div class="command-bar__group">
+          <button class="btn btn--subtle" id="btnClearStringify">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+            Clear
+          </button>
+        </div>
+        <div class="command-bar__separator" aria-hidden="true"></div>
+        <div class="command-bar__group">
+          <button class="btn btn--primary btn--sm" id="btnStringify" title="JSON → Stringified">
+            Stringify
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 8h6M9 5l3 3-3 3"/></svg>
+          </button>
+          <button class="btn btn--primary btn--sm" id="btnParse" title="Stringified → JSON">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 8H5M7 5L4 8l3 3"/></svg>
+            Parse
+          </button>
+        </div>
+        <div class="command-bar__separator" aria-hidden="true"></div>
+        <div class="command-bar__group">
+          <button class="btn btn--subtle btn--sm" id="btnStringifySample">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 2h8v12H4z"/><path d="M6 5h4M6 8h4M6 11h2"/></svg>
+            Sample
+          </button>
+        </div>
+      </div>
+
+      <!-- EDITOR LAYOUT -->
+      <div class="editor-layout" id="stringifyEditorLayout">
+        <div class="editor-pane" id="stringifyInputPane">
+          <div class="editor-pane__header">
+            <span class="editor-pane__title">JSON Object</span>
+            <div class="editor-pane__actions">
+              <button class="btn btn--subtle btn--icon btn--sm" id="btnCopyJson" title="Copy JSON" aria-label="Copy JSON">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="editor">
+            <div class="editor__gutter" id="stringifyJsonGutter" aria-hidden="true"></div>
+            <textarea class="editor__textarea" id="stringifyJsonInput"
+              spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" wrap="off"
+              placeholder='Paste JSON here...&#10;&#10;{"key": "value", "number": 42}'
+              aria-label="JSON input for stringify"></textarea>
+          </div>
+        </div>
+
+        <div class="editor-divider" id="stringifyDivider" role="separator" aria-label="Resize panels"></div>
+
+        <div class="editor-pane" id="stringifyOutputPane">
+          <div class="editor-pane__header">
+            <span class="editor-pane__title">Stringified String</span>
+            <div class="editor-pane__actions">
+              <button class="btn btn--subtle btn--icon btn--sm" id="btnCopyStringified" title="Copy stringified" aria-label="Copy stringified">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="editor">
+            <div class="editor__gutter" id="stringifyStrGutter" aria-hidden="true"></div>
+            <textarea class="editor__textarea" id="stringifyStringOutput"
+              spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" wrap="off"
+              placeholder='Paste stringified JSON here...&#10;&#10;"{\"key\":\"value\",\"number\":42}"'
+              aria-label="Stringified output"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERROR -->
+      <div class="stringify-error" id="stringifyError" style="display:none" role="alert"></div>
+
+      <!-- INFO CARDS -->
+      <div class="stringify-info">
+        <div class="info-card">
+          <div class="info-card__title">What is JSON.stringify()?</div>
+          <div class="info-card__text">Converts a JSON object into a string representation with escaped special characters. Commonly used when storing JSON in databases, passing JSON in URL parameters, or embedding JSON inside other strings.</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card__title">What is JSON.parse()?</div>
+          <div class="info-card__text">Converts a stringified JSON string back into a JSON object. Use this when you retrieve a JSON string from a database or API response and need to work with the structured data.</div>
+        </div>
+      </div>
+    </section>
 
     <!-- SEO CONTENT -->
     <section class="section">
@@ -433,6 +542,8 @@
   <script src="/json-prettier/js/formatter.js"></script>
   <script src="/json-prettier/js/editor.js"></script>
   <script src="/json-prettier/js/tree.js"></script>
+  <script src="/json-prettier/js/stringify.js"></script>
   <script src="/json-prettier/js/app.js"></script>
+  <script src="/js/cookie-consent.js"></script>
 </body>
 </html>

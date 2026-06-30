@@ -3,6 +3,7 @@
 
   const { $, $$, showToast, copyText, downloadFile, debounce, escapeHtml } = Utils;
 
+  let currentMode = 'formatter';
   let currentTab = 'formatted';
   let outputMode = 'format';
   let lastFormattedOutput = '';
@@ -250,6 +251,21 @@
     if (sizeEl) sizeEl.textContent = Utils.formatBytes(new Blob([value]).size);
   }
 
+  function initModeTabs() {
+    $$('.json-tab__btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        $$('.json-tab__btn').forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        currentMode = btn.dataset.mode;
+
+        const formatterSection = $('#formatterSection');
+        const stringifySection = $('#stringifySection');
+        if (formatterSection) formatterSection.style.display = currentMode === 'formatter' ? '' : 'none';
+        if (stringifySection) stringifySection.style.display = currentMode === 'stringify' ? '' : 'none';
+      });
+    });
+  }
+
   function initTabs() {
     $$('.tab-bar__tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -406,6 +422,7 @@
     });
     Editor.setupFileUpload('btnUpload', 'fileInput');
 
+    initModeTabs();
     initTabs();
     initModeToggle();
     initDivider();
