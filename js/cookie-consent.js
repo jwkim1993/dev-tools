@@ -12,8 +12,8 @@
   banner.innerHTML =
     '<div class="cookie-banner__inner">' +
       '<p class="cookie-banner__text">' +
-        'This site uses cookies for essential functionality and third-party advertising (Google AdSense). ' +
-        'By continuing to use this site, you consent to our use of cookies. ' +
+        'This site uses cookies for essential functionality. ' +
+        'We may also use cookies for advertising in the future. ' +
         '<a href="/privacy.html">Learn more</a>' +
       '</p>' +
       '<div class="cookie-banner__actions">' +
