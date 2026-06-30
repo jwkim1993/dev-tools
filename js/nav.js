@@ -7,6 +7,7 @@
     { href: '/uuid-generator/', label: 'UUID Generator' },
     { href: '/jwt-decoder/', label: 'JWT Decoder' },
     { href: '/cron-expression/', label: 'Cron Expression' },
+    { href: '/regex-tester/', label: 'Regex Tester' },
     { href: '/about.html', label: 'About' },
   ];
 

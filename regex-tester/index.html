@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regex Tester &amp; Validator — Test Regular Expressions Online Free</title>
+  <meta name="description" content="Free online regex tester and validator. Write, test, and debug regular expressions with real-time match highlighting, capture group inspection, and replace preview. Supports all JavaScript regex flags. 100% client-side.">
+  <meta name="keywords" content="regex tester, regular expression tester, regex validator, regex online, regex debugger, regex match, regex replace, regex flags, JavaScript regex, regex groups, regex playground, free regex tool">
+  <link rel="canonical" href="https://devtools.pages.dev/regex-tester/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Regex Tester & Validator — Test Regular Expressions Online Free">
+  <meta property="og:description" content="Free online regex tool. Write, test, and debug regular expressions with real-time highlighting, capture groups, and replace preview. All processing in your browser.">
+  <meta property="og:url" content="https://devtools.pages.dev/regex-tester/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Regex Tester & Validator — Free Online Regular Expression Tool">
+  <meta name="twitter:description" content="Test and validate regular expressions in your browser. Real-time highlighting, capture groups, and replace preview. Free, private, no sign-up.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230078D4'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='Consolas,monospace' font-weight='700' font-size='11' fill='white'%3E.*%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/regex-tester/css/regex-tester.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Regex Tester & Validator",
+    "url": "https://devtools.pages.dev/regex-tester/",
+    "description": "Free online tool to write, test, and debug regular expressions with real-time match highlighting, capture group inspection, and replace preview. Supports all JavaScript regex flags. All processing happens client-side in your browser.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a regular expression (regex)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A regular expression (regex or regexp) is a sequence of characters that defines a search pattern. Regular expressions are used for pattern matching within strings — finding, extracting, replacing, or validating text. They are supported in virtually every programming language including JavaScript, Python, Java, C#, Go, and Ruby, as well as in command-line tools like grep, sed, and awk."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this regex tester safe to use with sensitive data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. This tool processes everything entirely in your browser using JavaScript. Your patterns and test strings are never transmitted to any server. You can verify this by checking the browser's network tab — no requests are made when you test a pattern. The tool works offline after the initial page load."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What regex flags are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This tool supports all standard JavaScript regex flags: g (global — find all matches), i (case-insensitive matching), m (multiline — ^ and $ match line boundaries), s (dotAll — dot matches newlines), u (unicode — full Unicode support), and y (sticky — match from lastIndex only)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are capture groups in regex?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Capture groups are portions of a regex pattern enclosed in parentheses (). They let you extract specific parts of a match. For example, the pattern (\\d{4})-(\\d{2})-(\\d{2}) applied to '2024-03-15' captures the year, month, and day as separate groups. Named groups use the syntax (?<name>...) for clearer code. This tool displays all capture groups for each match."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="/" class="nav__logo" aria-label="DevTools Home">
+      <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/><path d="M14 4l-4 16"/></svg>
+      DevTools
+    </a>
+    <nav>
+      <ul class="nav__links" id="navLinks"></ul>
+    </nav>
+    <button class="nav__hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1 class="hero__title">Regex Tester &amp; Validator</h1>
+      <p class="hero__subtitle">Write, test, and debug regular expressions with real-time match highlighting &mdash; entirely in your browser</p>
+    </section>
+
+    <!-- FLAGS & PRESETS COMMAND BAR -->
+    <div class="command-bar" role="toolbar" aria-label="Regex options">
+      <div class="command-bar__group" role="group" aria-label="Regex flags">
+        <span class="command-bar__label">Flags</span>
+        <button class="flag-btn" id="flag-g" title="Global: Find all matches" aria-pressed="false">g</button>
+        <button class="flag-btn" id="flag-i" title="Case-insensitive" aria-pressed="false">i</button>
+        <button class="flag-btn" id="flag-m" title="Multiline: ^ and $ match line boundaries" aria-pressed="false">m</button>
+        <button class="flag-btn" id="flag-s" title="DotAll: . matches newlines" aria-pressed="false">s</button>
+        <button class="flag-btn" id="flag-u" title="Unicode: Full Unicode support" aria-pressed="false">u</button>
+        <button class="flag-btn" id="flag-y" title="Sticky: Match from lastIndex only" aria-pressed="false">y</button>
+      </div>
+      <div class="command-bar__separator"></div>
+      <div class="command-bar__group" role="group" aria-label="Presets">
+        <span class="command-bar__label">Presets</span>
+        <button class="preset-btn" data-preset="Email">Email</button>
+        <button class="preset-btn" data-preset="URL">URL</button>
+        <button class="preset-btn" data-preset="IP Address">IP</button>
+        <button class="preset-btn" data-preset="Date">Date</button>
+        <button class="preset-btn" data-preset="Hex Color">Hex</button>
+        <button class="preset-btn" data-preset="Phone">Phone</button>
+      </div>
+    </div>
+
+    <!-- Pattern Input -->
+    <div class="regex-input">
+      <label for="regexInput" class="regex-input__label">Expression</label>
+      <div class="regex-input__field-wrap" id="regexBar">
+        <span class="regex-input__delim" aria-hidden="true">/</span>
+        <input type="text" class="regex-input__field" id="regexInput" placeholder="Enter your regular expression..." spellcheck="false" autocomplete="off" aria-label="Regex pattern">
+        <span class="regex-input__delim" aria-hidden="true">/</span>
+        <span class="regex-input__flags" id="flagsDisplay">g</span>
+      </div>
+      <div class="regex-input__actions">
+        <button class="btn btn--subtle btn--sm" id="btnClear">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+          Clear All
+        </button>
+      </div>
+    </div>
+
+    <!-- Error Display -->
+    <div class="regex-error" id="regexError" role="alert"></div>
+
+    <!-- Test String -->
+    <div class="regex-card">
+      <div class="regex-card__head">
+        <div class="regex-card__head-left">
+          <span class="regex-card__dot regex-card__dot--primary"></span>
+          <span class="regex-card__title">Test String</span>
+        </div>
+        <div class="test-area__stats">
+          <span class="test-area__stat">Matches: <span class="test-area__stat-value" id="statMatches">0</span></span>
+          <span class="test-area__stat">Groups: <span class="test-area__stat-value" id="statGroups">0</span></span>
+        </div>
+      </div>
+      <div class="highlight-wrap">
+        <div class="highlight-backdrop" id="highlightBackdrop" aria-hidden="true"></div>
+        <textarea class="test-area__textarea" id="testInput" placeholder="Type or paste your test string here...&#10;&#10;Matches will be highlighted in real time as you type." spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <!-- Replace -->
+    <div class="regex-card">
+      <div class="regex-card__head">
+        <div class="regex-card__head-left">
+          <span class="regex-card__dot regex-card__dot--success"></span>
+          <span class="regex-card__title">Replace</span>
+        </div>
+        <button class="btn btn--subtle btn--sm btn--icon" id="btnCopyReplace" title="Copy result" aria-label="Copy replace result">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg>
+        </button>
+      </div>
+      <textarea class="replace-area__input" id="replaceInput" placeholder="Enter replacement string... Use $1, $2 for groups, $& for full match" spellcheck="false"></textarea>
+      <div class="replace-output">
+        <div class="replace-output__header">Result</div>
+        <div class="replace-output__text" id="replaceOutput"></div>
+      </div>
+    </div>
+
+    <!-- Match Details -->
+    <div class="regex-card">
+      <div class="regex-card__head">
+        <div class="regex-card__head-left">
+          <span class="regex-card__dot regex-card__dot--purple"></span>
+          <span class="regex-card__title">Match Details</span>
+        </div>
+      </div>
+      <div class="match-list" id="matchList">
+        <div class="match-list__empty">No matches found. Type a pattern and test string above.</div>
+      </div>
+    </div>
+
+    <!-- Quick Reference (collapsible) -->
+    <button class="ref-toggle" id="refToggle" aria-expanded="false" aria-controls="refGrid">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>
+      Quick Reference
+    </button>
+    <div class="ref-grid" id="refGrid">
+      <div class="ref-category">
+        <div class="ref-category__title">Character Classes</div>
+        <div class="ref-row" data-token="."><span class="ref-row__token">.</span><span class="ref-row__desc">Any character (except newline)</span></div>
+        <div class="ref-row" data-token="\d"><span class="ref-row__token">\d</span><span class="ref-row__desc">Digit [0-9]</span></div>
+        <div class="ref-row" data-token="\D"><span class="ref-row__token">\D</span><span class="ref-row__desc">Non-digit</span></div>
+        <div class="ref-row" data-token="\w"><span class="ref-row__token">\w</span><span class="ref-row__desc">Word character [a-zA-Z0-9_]</span></div>
+        <div class="ref-row" data-token="\W"><span class="ref-row__token">\W</span><span class="ref-row__desc">Non-word character</span></div>
+        <div class="ref-row" data-token="\s"><span class="ref-row__token">\s</span><span class="ref-row__desc">Whitespace</span></div>
+        <div class="ref-row" data-token="\S"><span class="ref-row__token">\S</span><span class="ref-row__desc">Non-whitespace</span></div>
+        <div class="ref-row" data-token="[abc]"><span class="ref-row__token">[abc]</span><span class="ref-row__desc">Character set: a, b, or c</span></div>
+        <div class="ref-row" data-token="[^abc]"><span class="ref-row__token">[^abc]</span><span class="ref-row__desc">Negated set: not a, b, or c</span></div>
+        <div class="ref-row" data-token="[a-z]"><span class="ref-row__token">[a-z]</span><span class="ref-row__desc">Range: a through z</span></div>
+      </div>
+      <div class="ref-category">
+        <div class="ref-category__title">Quantifiers</div>
+        <div class="ref-row" data-token="*"><span class="ref-row__token">*</span><span class="ref-row__desc">0 or more</span></div>
+        <div class="ref-row" data-token="+"><span class="ref-row__token">+</span><span class="ref-row__desc">1 or more</span></div>
+        <div class="ref-row" data-token="?"><span class="ref-row__token">?</span><span class="ref-row__desc">0 or 1 (optional)</span></div>
+        <div class="ref-row" data-token="{3}"><span class="ref-row__token">{n}</span><span class="ref-row__desc">Exactly n times</span></div>
+        <div class="ref-row" data-token="{3,}"><span class="ref-row__token">{n,}</span><span class="ref-row__desc">n or more times</span></div>
+        <div class="ref-row" data-token="{3,5}"><span class="ref-row__token">{n,m}</span><span class="ref-row__desc">Between n and m times</span></div>
+        <div class="ref-row" data-token="*?"><span class="ref-row__token">*?</span><span class="ref-row__desc">0 or more (lazy)</span></div>
+        <div class="ref-row" data-token="+?"><span class="ref-row__token">+?</span><span class="ref-row__desc">1 or more (lazy)</span></div>
+      </div>
+      <div class="ref-category">
+        <div class="ref-category__title">Anchors &amp; Boundaries</div>
+        <div class="ref-row" data-token="^"><span class="ref-row__token">^</span><span class="ref-row__desc">Start of string / line</span></div>
+        <div class="ref-row" data-token="$"><span class="ref-row__token">$</span><span class="ref-row__desc">End of string / line</span></div>
+        <div class="ref-row" data-token="\b"><span class="ref-row__token">\b</span><span class="ref-row__desc">Word boundary</span></div>
+        <div class="ref-row" data-token="\B"><span class="ref-row__token">\B</span><span class="ref-row__desc">Non-word boundary</span></div>
+      </div>
+      <div class="ref-category">
+        <div class="ref-category__title">Groups &amp; Lookaround</div>
+        <div class="ref-row" data-token="(abc)"><span class="ref-row__token">(abc)</span><span class="ref-row__desc">Capture group</span></div>
+        <div class="ref-row" data-token="(?:abc)"><span class="ref-row__token">(?:abc)</span><span class="ref-row__desc">Non-capturing group</span></div>
+        <div class="ref-row" data-token="(?<name>abc)"><span class="ref-row__token">(?&lt;n&gt;)</span><span class="ref-row__desc">Named capture group</span></div>
+        <div class="ref-row" data-token="(?=abc)"><span class="ref-row__token">(?=abc)</span><span class="ref-row__desc">Positive lookahead</span></div>
+        <div class="ref-row" data-token="(?!abc)"><span class="ref-row__token">(?!abc)</span><span class="ref-row__desc">Negative lookahead</span></div>
+        <div class="ref-row" data-token="(?<=abc)"><span class="ref-row__token">(?&lt;=)</span><span class="ref-row__desc">Positive lookbehind</span></div>
+        <div class="ref-row" data-token="(?<!abc)"><span class="ref-row__token">(?&lt;!)</span><span class="ref-row__desc">Negative lookbehind</span></div>
+        <div class="ref-row" data-token="a|b"><span class="ref-row__token">a|b</span><span class="ref-row__desc">Alternation (or)</span></div>
+      </div>
+    </div>
+
+    <!-- ==================== EDUCATIONAL CONTENT ==================== -->
+
+    <!-- What is Regex -->
+    <section class="section">
+      <h2 class="section__title">What is a Regular Expression (Regex)?</h2>
+      <div class="content">
+        <p>A regular expression (regex or regexp) is a sequence of characters that defines a search pattern. Regular expressions are one of the most powerful tools in programming for working with text. They let you search for patterns in strings, validate user input, extract structured data from unstructured text, and perform complex find-and-replace operations — all with a single expression.</p>
+        <p>Regular expressions are supported in virtually every programming language including JavaScript, Python, Java, C#, Go, Ruby, PHP, and Perl, as well as in command-line tools like <code>grep</code>, <code>sed</code>, and <code>awk</code>. While the syntax varies slightly between flavors, the core concepts — character classes, quantifiers, groups, and anchors — are universal.</p>
+        <p>The concept of regular expressions originates from formal language theory developed by mathematician Stephen Kleene in the 1950s. Ken Thompson brought them into computing by implementing them in the QED text editor and later in Unix tools. Today, regex is an indispensable skill for developers, data scientists, system administrators, and anyone who works with text data at scale.</p>
+      </div>
+    </section>
+
+    <!-- How Regex Works -->
+    <section class="section">
+      <h2 class="section__title">How Regular Expressions Work</h2>
+      <div class="content">
+        <p>At its core, a regex engine reads a pattern character by character and tries to match it against an input string. The engine walks through the string one position at a time, attempting to find a sequence of characters that satisfies the entire pattern. If a match attempt fails at any point, the engine backtracks and tries the next starting position.</p>
+
+        <h3>Character Matching</h3>
+        <p>Literal characters in a pattern match themselves. The pattern <code>cat</code> matches the exact string "cat" within any text. Special characters (called metacharacters) have special meanings: <code>.</code> matches any character, <code>\d</code> matches any digit, and <code>\w</code> matches any word character (letter, digit, or underscore).</p>
+
+        <h3>Quantifiers</h3>
+        <p>Quantifiers specify how many times a character or group should repeat. <code>*</code> means zero or more, <code>+</code> means one or more, <code>?</code> means zero or one, and <code>{n,m}</code> means between n and m times. By default, quantifiers are greedy — they match as much as possible. Adding <code>?</code> after a quantifier makes it lazy, matching as little as possible.</p>
+
+        <h3>Groups and Capture</h3>
+        <p>Parentheses <code>()</code> create capture groups that let you extract specific parts of a match. For example, <code>(\d{4})-(\d{2})-(\d{2})</code> applied to "2024-03-15" captures "2024", "03", and "15" as separate groups. Named groups like <code>(?&lt;year&gt;\d{4})</code> make your patterns more readable and maintainable.</p>
+
+        <h3>Anchors</h3>
+        <p><code>^</code> asserts the position at the start of the string (or line in multiline mode), while <code>$</code> asserts the end. <code>\b</code> marks a word boundary — the position between a word character and a non-word character. These anchors don't match characters themselves but rather positions in the string.</p>
+      </div>
+    </section>
+
+    <!-- Common Use Cases -->
+    <section class="section">
+      <h2 class="section__title">Common Regex Use Cases</h2>
+      <div class="card-grid">
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="14" height="14" rx="3"/><path d="M7 10l2 2 4-4"/></svg>
+          </div>
+          <h3 class="info-card__title">Input Validation</h3>
+          <p class="info-card__text">Validate email addresses, phone numbers, zip codes, credit card numbers, passwords, and other user inputs. Regex can enforce format requirements before data reaches your backend or database.</p>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="5"/><path d="M12 12l5 5"/></svg>
+          </div>
+          <h3 class="info-card__title">Search &amp; Extract</h3>
+          <p class="info-card__text">Find and extract structured data from unstructured text — URLs from web pages, dates from documents, error codes from log files, or specific fields from CSV and configuration files.</p>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h12M4 13h8"/><path d="M14 10l3 3-3 3"/></svg>
+          </div>
+          <h3 class="info-card__title">Find &amp; Replace</h3>
+          <p class="info-card__text">Perform sophisticated text transformations — reformat dates, rename variables across a codebase, clean up whitespace, normalize data formats, or restructure text with capture group back-references.</p>
+        </article>
+        <article class="info-card">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 10h14M7 6l-4 4 4 4M13 6l4 4-4 4"/></svg>
+          </div>
+          <h3 class="info-card__title">Parsing &amp; Tokenization</h3>
+          <p class="info-card__text">Split text into meaningful tokens for lexical analysis, syntax highlighting, Markdown processing, template engines, or any application that needs to understand the structure of text.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- JavaScript Regex Flags -->
+    <section class="section">
+      <h2 class="section__title">JavaScript Regex Flags Explained</h2>
+      <div class="content">
+        <p>Flags (also called modifiers) change how the regex engine interprets and applies a pattern. In JavaScript, flags are appended after the closing delimiter of the regex literal (<code>/pattern/flags</code>) or passed as the second argument to <code>new RegExp(pattern, flags)</code>.</p>
+      </div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Flag</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>g</code></td>
+            <td>Global</td>
+            <td>Find all matches in the string, not just the first. Without this flag, the regex stops after the first match.</td>
+          </tr>
+          <tr>
+            <td><code>i</code></td>
+            <td>Case-insensitive</td>
+            <td>Makes the pattern match regardless of letter case. <code>/abc/i</code> matches "ABC", "Abc", "aBc", etc.</td>
+          </tr>
+          <tr>
+            <td><code>m</code></td>
+            <td>Multiline</td>
+            <td>Changes <code>^</code> and <code>$</code> to match the start/end of each line, not just the entire string. Essential for line-by-line matching.</td>
+          </tr>
+          <tr>
+            <td><code>s</code></td>
+            <td>DotAll</td>
+            <td>Makes <code>.</code> match any character including newlines (<code>\n</code>, <code>\r</code>). By default, <code>.</code> does not match newline characters.</td>
+          </tr>
+          <tr>
+            <td><code>u</code></td>
+            <td>Unicode</td>
+            <td>Enables full Unicode matching. Treats the pattern and string as Unicode code points. Required for matching emoji and supplementary characters correctly.</td>
+          </tr>
+          <tr>
+            <td><code>y</code></td>
+            <td>Sticky</td>
+            <td>Matches only at the position indicated by <code>lastIndex</code>. Unlike global, it will not scan ahead — the match must start exactly at the expected position.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Features of This Tool -->
+    <section class="section">
+      <h2 class="section__title">Features of This Regex Tester</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Real-time match highlighting</strong> — Matches are highlighted directly in your test string as you type the pattern. Alternating colors (blue and green) distinguish adjacent matches, making it easy to see where one match ends and the next begins.</li>
+          <li><strong>Capture group inspection</strong> — Every capture group (numbered and named) is displayed for each match in the details panel. See exactly what each group captured, along with match position and length.</li>
+          <li><strong>Live replace preview</strong> — Enter a replacement string and see the result instantly. Supports all JavaScript replacement patterns: <code>$1</code>, <code>$2</code> for numbered groups, <code>$&lt;name&gt;</code> for named groups, <code>$&amp;</code> for the full match, and <code>$`</code> / <code>$'</code> for pre/post-match text.</li>
+          <li><strong>All JavaScript flags</strong> — Toggle any combination of the six JavaScript regex flags (g, i, m, s, u, y) with a single click. Active flags are visually highlighted so you always know which modifiers are in effect.</li>
+          <li><strong>Pattern validation</strong> — Invalid patterns are caught instantly with clear error messages. The input border turns red and the error message shows exactly what went wrong, helping you fix syntax issues quickly.</li>
+          <li><strong>Preset patterns</strong> — One-click presets for common regex patterns (email, URL, IP address, date, hex color, phone number) with realistic sample test strings. Great for learning and quick validation tasks.</li>
+          <li><strong>Quick reference</strong> — A collapsible reference panel with clickable tokens. Click any token to insert it into your pattern at the cursor position. Covers character classes, quantifiers, anchors, and groups.</li>
+          <li><strong>100% client-side</strong> — All processing happens entirely in your browser. Your patterns and test data are never transmitted to any server. The tool works offline after the initial page load.</li>
+          <li><strong>No dependencies</strong> — Built with vanilla HTML, CSS, and JavaScript. No frameworks, no build tools, no third-party libraries. Loads instantly and runs on any modern browser.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2 class="section__title">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3 class="faq-question">What is a regular expression (regex)?</h3>
+        <p class="faq-answer">A regular expression (regex or regexp) is a sequence of characters that defines a search pattern. Regular expressions are used for pattern matching within strings — finding, extracting, replacing, or validating text. They are supported in virtually every programming language including JavaScript, Python, Java, C#, Go, and Ruby, as well as in command-line tools like grep, sed, and awk.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is this regex tester safe to use with sensitive data?</h3>
+        <p class="faq-answer">Yes. This tool processes everything entirely in your browser using JavaScript. Your patterns and test strings are never transmitted to any server. You can verify this by checking the browser's network tab — no requests are made when you test a pattern. The tool works offline after the initial page load.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What regex flags are supported?</h3>
+        <p class="faq-answer">This tool supports all standard JavaScript regex flags: g (global — find all matches), i (case-insensitive matching), m (multiline — ^ and $ match line boundaries), s (dotAll — dot matches newlines), u (unicode — full Unicode support), and y (sticky — match from lastIndex only).</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What are capture groups in regex?</h3>
+        <p class="faq-answer">Capture groups are portions of a regex pattern enclosed in parentheses (). They let you extract specific parts of a match. For example, the pattern (\d{4})-(\d{2})-(\d{2}) applied to "2024-03-15" captures the year, month, and day as separate groups. Named groups use the syntax (?&lt;name&gt;...) for clearer code. This tool displays all capture groups for each match.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What is the difference between greedy and lazy matching?</h3>
+        <p class="faq-answer">Greedy quantifiers (*, +, {n,m}) match as much text as possible, while lazy quantifiers (*?, +?, {n,m}?) match as little as possible. For example, given the text "&lt;b&gt;bold&lt;/b&gt;", the greedy pattern &lt;.+&gt; matches the entire string "&lt;b&gt;bold&lt;/b&gt;", but the lazy pattern &lt;.+?&gt; matches just "&lt;b&gt;" and then "&lt;/b&gt;" separately.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Why does my regex work differently in different languages?</h3>
+        <p class="faq-answer">While the core regex syntax is similar across languages, there are differences in supported features. For example, JavaScript does not support possessive quantifiers (++, *+) or atomic groups ((?>...)), which languages like Java and .NET do. Lookahead and lookbehind support also varies — JavaScript added lookbehind in ES2018, but older browsers may not support it. This tool uses the JavaScript regex engine built into your browser.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">How do I use replacement patterns like $1 and $&amp;?</h3>
+        <p class="faq-answer">In the replace field, you can use special replacement patterns. $1, $2, etc. insert the text captured by the corresponding numbered group. $&lt;name&gt; inserts a named group's capture. $&amp; inserts the entire match. $` inserts the text before the match, and $' inserts the text after. $$ inserts a literal dollar sign. These patterns follow the JavaScript String.replace() specification.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <div class="footer__heading">Tools</div>
+        <ul class="footer__links">
+          <li><a href="/json-prettier/" class="footer__link">JSON Formatter</a></li>
+          <li><a href="/uuid-generator/" class="footer__link">UUID Generator</a></li>
+          <li><a href="/jwt-decoder/" class="footer__link">JWT Decoder</a></li>
+          <li><a href="/cron-expression/" class="footer__link">Cron Expression</a></li>
+          <li><a href="/regex-tester/" class="footer__link">Regex Tester</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Resources</div>
+        <ul class="footer__links">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions" class="footer__link" target="_blank" rel="noopener">MDN Regex Guide</a></li>
+          <li><a href="https://tc39.es/ecma262/#sec-regexp-regular-expression-objects" class="footer__link" target="_blank" rel="noopener">ECMAScript RegExp Spec</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Site</div>
+        <ul class="footer__links">
+          <li><a href="/about.html" class="footer__link">About</a></li>
+          <li><a href="/privacy.html" class="footer__link">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">&copy; 2026 DevTools. All pattern matching happens in your browser. Your data never leaves your device.</p>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/regex-tester/js/app.js"></script>
+  <script src="/js/cookie-consent.js"></script>
+</body>
+</html>
